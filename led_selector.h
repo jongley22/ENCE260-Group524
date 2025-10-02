@@ -55,7 +55,7 @@ static const pio_t rows[7];
 static const pio_t cols[5];
 
 /** Bitmap for LED matrix display. */
-static const uint8_t bitmap[5];
+static uint8_t bitmap[5];
 
 /** Function to display a column on the LED matrix.
  * @param row_pattern The pattern to display on the rows.
@@ -65,6 +65,6 @@ static void display_column(uint8_t row_pattern, uint8_t current_column);
 
 void led_while(void);
 
-void led_init(void);
+void led_selector(uint8_t i, uint8_t j, uint8_t bol);
 
 #endif /* LEDMAT_H */

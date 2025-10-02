@@ -174,7 +174,10 @@ int main (void)
 
     while (1)
     {
-    led_while();         
+    led_while(); 
+    led_selector(0,0,1);        
+    led_selector(0,4,1);   
+    led_selector(6,0,1);        
     }
 
 

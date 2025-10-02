@@ -176,13 +176,13 @@ static const pio_t cols[] =
 //     0x30, 0x46, 0x40, 0x46, 0x30
 // };
 
-static const uint8_t bitmap[] =
+static uint8_t bitmap[] =
 {
-    0b00110001,
-    0b01000110,
-    0b01000000,
-    0b01000110,
-    0b00110000
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000
 };
 
 
@@ -240,3 +240,15 @@ void led_while(void)
         current_column = 0;
     }  
 }
+
+void led_selector(uint8_t i, uint8_t j, uint8_t bol)
+{
+    if (i < 7 && j < 5) { // Validate indices
+        if (bol) {
+            bitmap[j] |= (1 << i); // Set bit i in bitmap[j] to 1
+        } else {
+            bitmap[j] &= ~(1 << i); // Clear bit i in bitmap[j] to 0
+        }
+    }
+}
+
