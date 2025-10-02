@@ -85,6 +85,7 @@
 #include "tinygl.h"
 
 
+
 #define PACER_RATE 50
 int main (void)
 {
@@ -115,58 +116,66 @@ int main (void)
     while (1)
     {
     
-        // pacer_wait();
-        // LED_ACTIVATOR(3,4);
-        // /* Pace the loop.  */
+    //     // pacer_wait();
+    //     // LED_ACTIVATOR(3,4);
+    //     // /* Pace the loop.  */
 
 
 
-        // pacer_wait ();
+    //     // pacer_wait ();
 
-        // // col 5 stays on always
-        // pio_output_low(LEDMAT_ROW1_PIO);
-        // pio_output_low(LEDMAT_COL1_PIO);
-        // pio_output_high(LEDMAT_ROW7_PIO); 
-        // pio_output_low(LEDMAT_COL5_PIO);
-        // /* TODO: Drive the LED matrix using the pio functions,
-        //    displaying only three corner LEDs.  */
+    //     // // col 5 stays on always
+    //     // pio_output_low(LEDMAT_ROW1_PIO);
+    //     // pio_output_low(LEDMAT_COL1_PIO);
+    //     // pio_output_high(LEDMAT_ROW7_PIO); 
+    //     // pio_output_low(LEDMAT_COL5_PIO);
+    //     // /* TODO: Drive the LED matrix using the pio functions,
+    //     //    displaying only three corner LEDs.  */
         
-        // pacer_wait ();
-        // pio_output_low(LEDMAT_ROW7_PIO);
-        // pio_output_high(LEDMAT_COL5_PIO);
+    //     // pacer_wait ();
+    //     // pio_output_low(LEDMAT_ROW7_PIO);
+    //     // pio_output_high(LEDMAT_COL5_PIO);
 
 
-        // pacer_wait();
-        // tinygl_clear ();
+    //     // pacer_wait();
+    //     // tinygl_clear ();
         
-        // tinygl_point_t pixel_pos;
-        //     pixel_pos.x = 1;
-        //     pixel_pos.y = 5;
-        // tinygl_pixel_set (pixel_pos, 1);
-        // tinygl_update ();
+    //     // tinygl_point_t pixel_pos;
+    //     //     pixel_pos.x = 1;
+    //     //     pixel_pos.y = 5;
+    //     // tinygl_pixel_set (pixel_pos, 1);
+    //     // tinygl_update ();
 
-        // pacer_wait();
-        // tinygl_clear ();
-        // tinygl_point_t pixeel_pos;
-        //     pixeel_pos.x = 1;
-        //     pixeel_pos.y = 1;
-        // tinygl_pixel_set (pixeel_pos, 1);
-        // tinygl_update ();
+    //     // pacer_wait();
+    //     // tinygl_clear ();
+    //     // tinygl_point_t pixeel_pos;
+    //     //     pixeel_pos.x = 1;
+    //     //     pixeel_pos.y = 1;
+    //     // tinygl_pixel_set (pixeel_pos, 1);
+    //     // tinygl_update ();
         
-        pacer_wait();
-        tinygl_clear ();
-        tinygl_point_t pixeeel_pos;
-            pixeeel_pos.x = 1;
-            pixeeel_pos.y = 1;
-        tinygl_pixel_set (pixeeel_pos, 1);
-        tinygl_update ();
+    //     pacer_wait();
+    //     tinygl_clear ();
+    //     tinygl_point_t pixeeel_pos;
+    //         pixeeel_pos.x = 1;
+    //         pixeeel_pos.y = 1;
+    //     tinygl_pixel_set (pixeeel_pos, 1);
+    //     tinygl_update ();
 
-    // pacer_wait();
-    // LED_ACTIVATOR(0,0);
-    // pacer_wait();
-    // LED_ACTIVATOR(0,4);
-    // pacer_wait();
-    // LED_ACTIVATOR(6,0);
+    // // pacer_wait();
+    // // LED_ACTIVATOR(0,0);
+    // // pacer_wait();
+    // // LED_ACTIVATOR(0,4);
+    // // pacer_wait();
+    // // LED_ACTIVATOR(6,0);
+
+    led_init();
+    
+
+    while (1)
+    {
+    led_while();         
+    }
 
 
     }
