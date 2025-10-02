@@ -11,19 +11,40 @@ extern bool BO_ED1_5 = 0; //status of led 1_17
 
 // system_init();
 
-// pio_config_set(LEDMAT_ROW1_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_ROW2_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_ROW3_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_ROW4_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_ROW5_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_ROW6_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_ROW7_PIO, PIO_OUTPUT_HIGH);
+static const pio_t rows[] =
+{
+    LEDMAT_ROW1_PIO, LEDMAT_ROW2_PIO, LEDMAT_ROW3_PIO, 
+    LEDMAT_ROW4_PIO, LEDMAT_ROW5_PIO, LEDMAT_ROW6_PIO,
+    LEDMAT_ROW7_PIO
+};
 
-// pio_config_set(LEDMAT_COL1_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_COL2_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_COL3_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_COL4_PIO, PIO_OUTPUT_HIGH);
-// pio_config_set(LEDMAT_COL5_PIO, PIO_OUTPUT_HIGH);
+
+/** Define PIO pins driving LED matrix columns.  */
+static const pio_t cols[] =
+{
+    LEDMAT_COL1_PIO, LEDMAT_COL2_PIO, LEDMAT_COL3_PIO,
+    LEDMAT_COL4_PIO, LEDMAT_COL5_PIO
+};
+
+void LED_ACTIVATOR(uint8_t i,uint8_t j){
+    for (uint8_t t = 0; t < 6; t++) {
+        if (t == i) {          
+            pio_output_low(rows[i]);
+        }
+        else  {           
+            pio_output_high(rows[i]);
+        }
+    }
+    for (uint8_t x = 0; x < 4; x++) {
+        if (x == j){
+            pio_output_low(cols[i]);
+        }
+        else {
+            pio_output_high(cols[i]);
+        }
+    }
+}
+
 
 void LED1_1(bool bol)
 {

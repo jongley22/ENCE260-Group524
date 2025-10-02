@@ -34,7 +34,7 @@
 
 //     pio_config_set (LEDMAT_ROW1_PIO, PIO_OUTPUT_HIGH);
 //     pio_config_set (LEDMAT_ROW2_PIO, PIO_OUTPUT_HIGH);
-//     pio_config_set (LEDMAT_ROW3_PIO, PIO_OUTPUT_HIGH);
+//     pLED_ACTIVATOR(1,2);io_config_set (LEDMAT_ROW3_PIO, PIO_OUTPUT_HIGH);
 //     pio_config_set (LEDMAT_ROW4_PIO, PIO_OUTPUT_HIGH);
 //     pio_config_set (LEDMAT_ROW5_PIO, PIO_OUTPUT_HIGH);
 //     pio_config_set (LEDMAT_ROW6_PIO, PIO_OUTPUT_HIGH);
@@ -110,6 +110,10 @@ int main (void)
     pacer_init (PACER_RATE);
     while (1)
     {
+    
+        LED_ACTIVATOR(1,4);
+        // pacer_wait();
+        // LED_ACTIVATOR(3,4);
         // /* Pace the loop.  */
 
 
@@ -127,12 +131,14 @@ int main (void)
         // pacer_wait ();
         // pio_output_low(LEDMAT_ROW7_PIO);
         // pio_output_high(LEDMAT_COL5_PIO);
-        LED1_1(1);
-        pacer_wait();
-        LED1_5(1);
-        pacer_wait();
-        LED1_7(1);
-        pacer_wait();
+
+
+        // LED1_1(1);
+        // pacer_wait();
+        // LED1_5(1);
+        // pacer_wait();
+        // LED1_7(1);
+        // pacer_wait();
 
 
     }

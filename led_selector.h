@@ -12,7 +12,7 @@ extern bool BO_ED1_5;
 
 
 
-
+void LED_ACTIVATOR(uint8_t i,uint8_t j);
 void LED1_1(bool bol);
 
 #endif
