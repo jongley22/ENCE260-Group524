@@ -11,6 +11,10 @@
 static uint8_t i = 3;
 static uint8_t j = 2;
 
+static uint8_t i_opp;
+static uint8_t j_opp;
+
+
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
     return ((x_p & 0x07) << 3) | (y_p & 0x07);
@@ -42,6 +46,7 @@ void movement(void)
     if (navswitch_push_event_p (NAVSWITCH_SOUTH)){
     i++;
     }
+    led_selector(i,j,1)
 
 
 }
@@ -58,10 +63,10 @@ void communication(void)
     if (ir_uart_read_ready_p ()){
         opp_coords = ir_uart_getc ();
         // Unpack the coords
-        unpack_position(opp_coords, &i, &j);
+        unpack_position(opp_coords, &i_opp, &j_opp);
 
     }
-    led_selector(i,j,1);
+    led_selector(i_opp,j_opp,1);
 }
 
 
