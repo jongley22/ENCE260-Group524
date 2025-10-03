@@ -29,8 +29,8 @@ void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input po
 
 void movement(void)
 {
+    
     navswitch_update ();
-
     if (navswitch_push_event_p (NAVSWITCH_EAST)) {
     j++;
     }
@@ -46,19 +46,21 @@ void movement(void)
     if (navswitch_push_event_p (NAVSWITCH_SOUTH)){
     i++;
     }
-    led_selector(i,j,1)
-
-
+    led_selector(i,j,1);
 }
 
 void communication(void)  
 {
+    
     uint8_t user_cords;
     uint8_t opp_coords;
 
     if ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_WEST))||(navswitch_push_event_p (NAVSWITCH_SOUTH))||(navswitch_push_event_p (NAVSWITCH_WEST))){
+            
+  
         user_cords = pack_position(i,j);
         ir_uart_putc(user_cords); 
+        //ir_uart_putc(i); 
     }
     if (ir_uart_read_ready_p ()){
         opp_coords = ir_uart_getc ();
@@ -66,7 +68,7 @@ void communication(void)
         unpack_position(opp_coords, &i_opp, &j_opp);
 
     }
-    led_selector(i_opp,j_opp,1);
+    //led_selector(i_opp,j_opp,1);
 }
 
 
