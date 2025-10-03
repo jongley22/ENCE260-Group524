@@ -46,12 +46,16 @@ font.o: ../../utils/font.c ../../drivers/avr/system.h ../../utils/font.h
 ledmat.o: ../../drivers/ledmat.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/ledmat.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+navswitch.o: ../../drivers/navswitch.c ../../drivers/avr/delay.h ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/navswitch.h
+        $(CC) -c $(CFLAGS) $< -o $@
+communication.o: communication.c communication.h ../../drivers/avr/ir_uart.h ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font5x7_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h
+        $(CC) -c $(CFLAGS) $< -o $@
 
 
 
 
 # Link: create ELF output file from object files.
-game.out: game.o system.o pacer.o timer.o led_selector.o tinygl.o display.o font.o ledmat.o 
+game.out: game.o system.o pacer.o timer.o led_selector.o tinygl.o display.o font.o ledmat.o communication.o 
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
