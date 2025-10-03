@@ -13,7 +13,6 @@ static const pio_t rows[7];
 static const pio_t cols[5];
 
 /** Bitmap for LED matrix display. */
-static uint8_t display_bitmap[5];
 
 /** Function to display a column on the LED matrix.
  * @param row_pattern The pattern to display on the rows.
