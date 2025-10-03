@@ -73,7 +73,7 @@ void communication(void)
     }
 
     if (j>4 && move_made) {
-        user_cords = pack_position(i,j-5);
+        user_cords = pack_position(i,j-3);
         ir_uart_putc(user_cords); 
 
     } else {
