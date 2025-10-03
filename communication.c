@@ -8,8 +8,8 @@
     
 
 // pack the coords 
-static uint8_t i = 0;
-static uint8_t j = 0;
+static uint8_t i = 3;
+static uint8_t j = 2;
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
@@ -19,8 +19,8 @@ uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input pointer
 {
     *x_unp = (packed >> 3) & 0x07;  // upper 3 bits change me value of pointer
-    *y_unp = packed & 0x07;         // lower 3 bits
-    led_selector(i,j,1);  
+    *y_unp = packed & 0x07;
+          // lower 3 bits
 }
 
 void movement(void)
@@ -30,7 +30,7 @@ void movement(void)
     if (navswitch_push_event_p (NAVSWITCH_EAST)) {
     j++;
     }
-
+ 
     if (navswitch_push_event_p (NAVSWITCH_WEST)) {
     j--;
     }
@@ -46,16 +46,14 @@ void movement(void)
 
 }
 
-void communication(void) 
+void communication(void)  
 {
-    uint8_t coordinates;
+    uint8_t user_cords;
     uint8_t opp_coords;
 
-    coordinates = pack_position(i,j);
-
     if ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_WEST))||(navswitch_push_event_p (NAVSWITCH_SOUTH))||(navswitch_push_event_p (NAVSWITCH_WEST))){
-        coordinates = pack_position(i,j);
-        ir_uart_putc(coordinates); 
+        user_cords = pack_position(i,j);
+        ir_uart_putc(user_cords); 
     }
     if (ir_uart_read_ready_p ()){
         opp_coords = ir_uart_getc ();
@@ -63,6 +61,7 @@ void communication(void)
         unpack_position(opp_coords, &i, &j);
 
     }
+    led_selector(i,j,1);
 }
 
 
