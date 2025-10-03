@@ -13,7 +13,8 @@ int main (void)
 {
     system_init ();
     navswitch_init ();  
-
+    led_init();
+    ir_uart_init ();
 
 
     pacer_init (PACER_RATE*5);
@@ -21,15 +22,11 @@ int main (void)
     tinygl_init(PACER_RATE);
     while (1)
     {
-    led_init();
     
-
-    while (1)
-    {
     led_while(); 
     movement();
     communication();
-    }
+    
 
 
     }
