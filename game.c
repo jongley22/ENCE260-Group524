@@ -1,4 +1,3 @@
-
 #include "system.h"
 #include "pio.h"
 #include "navswitch.h"
@@ -28,9 +27,6 @@ int main (void)
     tinygl_init(PACER_RATE);
     while (1)
     {
-    
-  
-
     led_init();
     
 
