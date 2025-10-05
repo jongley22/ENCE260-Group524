@@ -5,14 +5,18 @@
 #include "tinygl.h"
 #include "../fonts/font5x7_1.h"
 #include "led_selector.h"
+#include "movement_his.h"
     
 
 // pack the coords 
-static uint8_t i = 3;
-static uint8_t j = 2;
+
 
 static uint8_t i_opp;
 static uint8_t j_opp;
+
+static uint8_t i = 3;
+static uint8_t j = 2;
+
 
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
@@ -29,22 +33,38 @@ void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input po
 
 void movement(void)
 {
-    
+
+    uint8_t j_changed;
+    uint8_t i_changed;
     navswitch_update ();
+    Pair led_off;
+
     if (navswitch_push_event_p (NAVSWITCH_EAST)) {
-    j++;
+        j++;
+        j_changed = 1;
     }
  
     if (navswitch_push_event_p (NAVSWITCH_WEST)) {
-    j--;
+        j--;
+        j_changed = 1;
     }
 
     if (navswitch_push_event_p (NAVSWITCH_NORTH)) {
-    i--;
+        i--;
+        i_changed = 1;
     }
 
     if (navswitch_push_event_p (NAVSWITCH_SOUTH)){
-    i++;
+        i++;
+        i_changed = 1;
+    }
+
+    if ((i_changed) || (j_changed)) {
+        led_off = addPair(&snake_body, i, j, 4); //snake body is an extern declared in movement_his.h
+        if (led_off.i != -1 || led_off.j != -1) {
+            snake_head_bm_sel(led_off.i, led_off.j, 0);
+        }
+
     }
 
 }
@@ -77,7 +97,7 @@ void communication(void)
         ir_uart_putc(user_cords); 
 
     } else {
-        snake_head_led(i,j,1);
+        snake_head_bm_sel(i,j,1);
         bitmap_complier();
 
     }

@@ -6,8 +6,9 @@
 #include "led_selector.h"
 #include "ir_uart.h"
 #include "tinygl.h"
+#include "movement_his.h"
 
-
+PairList snake_body; //right now will be 1
 
 #define PACER_RATE 50
 int main (void)
@@ -23,6 +24,8 @@ int main (void)
 
     tinygl_init(PACER_RATE);
     coord_generator();
+    init_move_his(&snake_body);  // max 5 pairs (<=70) "snake_body extern declared in "
+
     while (1)
     {
     
@@ -32,7 +35,7 @@ int main (void)
     
     if (navswitch_release_event_p (NAVSWITCH_PUSH)){
         coord_generator();
-    }
+        }
 
     }
 }

@@ -28,6 +28,12 @@ void led_selector(uint8_t i, uint8_t j, uint8_t bol);
 
 void bitmap_complier(void);
 
-void snake_head_led(uint8_t i, uint8_t j, uint8_t bol);
+void snake_head_bm_sel(uint8_t i, uint8_t j, uint8_t bol);
+
+//apple code 
+
+void display_apple(uint8_t i_display,uint8_t j_display);
+
+void coord_generator(void);
 
 #endif /* LEDMAT_H */

@@ -116,7 +116,26 @@ void led_selector(uint8_t i, uint8_t j, uint8_t bol)
     }
 }
 
-// This is where Apple spawner Begins 
+void snake_head_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
+{
+    if (i < 7 && j < 5) { // Validate indices
+        if (bol) {
+            snake_head_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
+        } else {
+            snake_head_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
+        }
+    }
+}
+
+void bitmap_complier(void)
+{
+    for (uint8_t j_search = 0; j_search < 5; j_search++) {
+        display_bitmap[j_search] = snake_head_bm[j_search];
+    }
+}
+
+
+// This is where Apple spawner Begin
 
 static uint8_t apple_counter = 1;
 
