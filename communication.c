@@ -33,40 +33,28 @@ void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input po
 
 void movement(void)
 {
+    uint8_t j_changed = 0, i_changed = 0;
 
-    uint8_t j_changed;
-    uint8_t i_changed;
-    navswitch_update ();
-    Pair led_off;
+    navswitch_update();
 
-    if (navswitch_push_event_p (NAVSWITCH_EAST)) {
-        j++;
-        j_changed = 1;
-    }
- 
-    if (navswitch_push_event_p (NAVSWITCH_WEST)) {
-        j--;
-        j_changed = 1;
-    }
+    if (navswitch_push_event_p(NAVSWITCH_EAST)) { j++; j_changed = 1; }
+    if (navswitch_push_event_p(NAVSWITCH_WEST)) { j--; j_changed = 1; }
+    if (navswitch_push_event_p(NAVSWITCH_NORTH)) { i--; i_changed = 1; }
+    if (navswitch_push_event_p(NAVSWITCH_SOUTH)) { i++; i_changed = 1; }
 
-    if (navswitch_push_event_p (NAVSWITCH_NORTH)) {
-        i--;
-        i_changed = 1;
-    }
+    if (i_changed || j_changed) {
+        Pair ev = addPair(&snake_body, i, j, 4);
 
-    if (navswitch_push_event_p (NAVSWITCH_SOUTH)){
-        i++;
-        i_changed = 1;
-    }
+        // Turn the value into an "optional pointer":
+        // NULL means "no eviction"; otherwise points to ev.
+        const Pair *old_tuple =
+            (ev.i == -1 && ev.j == -1) ? NULL : &ev;
 
-    if ((i_changed) || (j_changed)) {
-        led_off = addPair(&snake_body, i, j, 4); //snake body is an extern declared in movement_his.h
-        if (led_off.i != -1 || led_off.j != -1) {
-            snake_head_bm_sel(led_off.i, led_off.j, 0);
+        // Same pattern as your printList:
+        if (old_tuple && (old_tuple->i != -1 || old_tuple->j != -1)) {
+            snake_head_bm_sel(old_tuple->i, old_tuple->j, 0);
         }
-
     }
-
 }
 
 void communication(void)  
