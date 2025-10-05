@@ -2,7 +2,11 @@
 #include "pio.h"
 #include "pacer.h"
 #include "led_selector.h"
-
+// Header files for apple spawner
+#include "navswitch.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 static uint8_t current_column = 0; 
 /** Define PIO pins driving LED matrix rows.  */
 static const pio_t rows[] =
@@ -112,22 +116,33 @@ void led_selector(uint8_t i, uint8_t j, uint8_t bol)
     }
 }
 
-void snake_head_led(uint8_t i, uint8_t j, uint8_t bol)
-{
-    if (i < 7 && j < 5) { // Validate indices
-        if (bol) {
-            snake_head_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
-        } else {
-            snake_head_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
-        }
-    }
-}
+// This is where Apple spawner Begins 
 
-void bitmap_complier()
-{
-    for (uint8_t j = 0; j < 5; j++) {
-            snake_head_bm[j] |= // Set bit i in display_bitmap[j] to 1
-        }
-}
+static uint8_t apple_counter = 1;
 
+void coord_generator(void) {
+    navswitch_update ();
+
+    
+    
+    
+    int app_i = rand() % 7;  
+    int app_j = rand() % 5;  
+    //int app_i = 1;  
+    //int app_j = 1;  
+    
+    display_apple(app_i,app_j);
+    
+    
+}
+void display_apple(uint8_t i_display,uint8_t j_display){
+    // pacer_init (100);
+    // led_selector(i_display,j_display,1);
+    // pacer_wait();
+    // led_selector(i_display,j_display,0);
+    // pacer_wait();
+    led_selector(i_display,j_display,1);
+    apple_counter++;
+
+}
 

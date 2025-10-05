@@ -12,6 +12,7 @@
 #define PACER_RATE 50
 int main (void)
 {
+    srand(time(NULL));  // seed 
     system_init ();
     navswitch_init ();  
     led_init();
@@ -21,6 +22,7 @@ int main (void)
     pacer_init (PACER_RATE*5);
 
     tinygl_init(PACER_RATE);
+    coord_generator();
     while (1)
     {
     
@@ -28,7 +30,9 @@ int main (void)
     movement();
     communication();
     
-
+    if (navswitch_release_event_p (NAVSWITCH_PUSH)){
+        coord_generator();
+    }
 
     }
 }
