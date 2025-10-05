@@ -48,6 +48,15 @@ static uint8_t snake_head_bm[] =
     0b00000000
 };
 
+static uint8_t apples_bm[] =
+{
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000 
+};
+
 
 
 void display_column (uint8_t row_pattern, uint8_t current_column)
@@ -127,10 +136,22 @@ void snake_head_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
     }
 }
 
+void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
+{
+    if (i < 7 && j < 5) { // Validate indices
+        if (bol) {
+            apples_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
+        } else {
+            apples_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
+        }
+    }
+}
+
+
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        display_bitmap[j_search] = snake_head_bm[j_search];
+        display_bitmap[j_search] = apples_bm[j_search] | snake_head_bm[j_search] ; // snake_head_bm[j_search] || 
     }
 }
 
@@ -160,7 +181,7 @@ void display_apple(uint8_t i_display,uint8_t j_display){
     // pacer_wait();
     // led_selector(i_display,j_display,0);
     // pacer_wait();
-    led_selector(i_display,j_display,1);
+    apples_bm_sel(i_display,j_display,1);
     apple_counter++;
 
 }

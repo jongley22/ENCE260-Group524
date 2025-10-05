@@ -55,6 +55,7 @@ void movement(void)
             snake_head_bm_sel(old_tuple->i, old_tuple->j, 0);
         }
     }
+    j_changed = 0, i_changed = 0;
 }
 
 void communication(void)  
