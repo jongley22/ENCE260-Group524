@@ -26,4 +26,8 @@ void led_init(void);
 
 void led_selector(uint8_t i, uint8_t j, uint8_t bol);
 
+void bitmap_complier(void);
+
+void snake_head_led(uint8_t i, uint8_t j, uint8_t bol);
+
 #endif /* LEDMAT_H */

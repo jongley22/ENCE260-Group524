@@ -77,7 +77,8 @@ void communication(void)
         ir_uart_putc(user_cords); 
 
     } else {
-        led_selector(i,j,1);
+        snake_head_led(i,j,1);
+        bitmap_complier();
 
     }
    

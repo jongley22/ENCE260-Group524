@@ -35,6 +35,16 @@ static uint8_t display_bitmap[] =
     0b00000000
 };
 
+static uint8_t snake_head_bm[] =
+{
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000
+};
+
+
 
 void display_column (uint8_t row_pattern, uint8_t current_column)
 {
@@ -101,4 +111,23 @@ void led_selector(uint8_t i, uint8_t j, uint8_t bol)
         }
     }
 }
+
+void snake_head_led(uint8_t i, uint8_t j, uint8_t bol)
+{
+    if (i < 7 && j < 5) { // Validate indices
+        if (bol) {
+            snake_head_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
+        } else {
+            snake_head_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
+        }
+    }
+}
+
+void bitmap_complier()
+{
+    for (uint8_t j = 0; j < 5; j++) {
+            snake_head_bm[j] |= // Set bit i in display_bitmap[j] to 1
+        }
+}
+
 

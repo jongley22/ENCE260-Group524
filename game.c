@@ -4,6 +4,7 @@
 #include "communication.h"
 #include "pacer.h"
 #include "led_selector.h"
+#include "ir_uart.h"
 #include "tinygl.h"
 
 
