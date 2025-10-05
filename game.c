@@ -7,6 +7,7 @@
 #include "ir_uart.h"
 #include "tinygl.h"
 #include "movement_his.h"
+#include "apples.h"
 
 PairList snake_body; //right now will be 1
 

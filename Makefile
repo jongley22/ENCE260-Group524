@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h led_selector.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/ledmat.h movement_his.h
+game.o: game.c ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h led_selector.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/ledmat.h movement_his.h apples.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
@@ -28,7 +28,7 @@ pacer.o: ../../utils/pacer.c ../../drivers/avr/system.h ../../drivers/avr/timer.
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-led_selector.o: led_selector.c led_selector.h ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h ../../drivers/navswitch.h
+led_selector.o: led_selector.c led_selector.h ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h ../../drivers/navswitch.h apples.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 tinygl.o: ../../utils/tinygl.c ../../utils/tinygl.h ../../drivers/avr/system.h ../../drivers/display.h  ../../utils/font.h
@@ -67,8 +67,9 @@ prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/prescale.h ../../driv
 movement_his.o: movement_his.c movement_his.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+apples.o: apples.c apples.h ../../drivers/avr/system.h led_selector.h
 # Link: create ELF output file from object files.
-game.out: game.o system.o pacer.o timer0.o led_selector.o tinygl.o display.o font.o ledmat.o communication.o ir_uart.o usart1.o navswitch.o timer.o prescale.o movement_his.o
+game.out: game.o system.o pacer.o timer0.o led_selector.o tinygl.o display.o font.o ledmat.o communication.o ir_uart.o usart1.o navswitch.o timer.o prescale.o movement_his.o apples.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
