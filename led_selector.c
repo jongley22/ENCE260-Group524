@@ -64,6 +64,15 @@ static uint8_t apples_bm[] =
     0b00000000 
 };
 
+const uint8_t blank_bm[] =
+{
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000 
+};
+
 
 
 void display_column (uint8_t row_pattern, uint8_t current_column)
@@ -173,7 +182,6 @@ void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
         }
     }
 }
-
 
 void bitmap_complier(void)
 {
