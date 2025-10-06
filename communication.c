@@ -56,16 +56,25 @@ void movement(void)
     }
 
     if (i_changed || j_changed) {
-        Pair ev = addPair(&snake_body_his, i, j, 4);
+        Pair body_ev = addPair(&snake_body_his, i, j, 4);
+        Pair head_ev = addPair(&snake_head_his, i, j, 1);
 
         // Turn the value into an "optional pointer":
-        // NULL means "no eviction"; otherwise points to ev.
-        const Pair *old_tuple =
-            (ev.i == -1 && ev.j == -1) ? NULL : &ev;
+        // NULL means "no eviction"; otherwise points to body_ev.
+        const Pair *body_old_tuple =
+            (body_ev.i == -1 && body_ev.j == -1) ? NULL : &body_ev;
 
-        // Same pattern as your printList:
-        if (old_tuple && (old_tuple->i != -1 || old_tuple->j != -1)) {
-            snake_body_bm_sel(old_tuple->i, old_tuple->j, 0);
+        //now head
+        const Pair *head_old_tuple =
+            (head_ev.i == -1 && head_ev.j == -1) ? NULL : &head_ev;
+
+        // if equal to -1 body is extending so if its not turn off last led body
+        if (body_old_tuple && (body_old_tuple->i != -1 || body_old_tuple->j != -1)) {
+            snake_body_bm_sel(body_old_tuple->i, body_old_tuple->j, 0);
+        }
+
+        if (head_old_tuple && (head_old_tuple->i != -1 || head_old_tuple->j != -1)) {
+            snake_head_bm_sel(head_old_tuple->i, head_old_tuple->j, 0);
         }
     }
     j_changed = 0, i_changed = 0;
