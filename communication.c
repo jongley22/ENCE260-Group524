@@ -58,9 +58,12 @@ void movement(void)
     }
 
     if (i_changed || j_changed) {
-        if (apple_eaten()) {
+        
+        Pair overlap_cord;
+
+        if (apple_eaten(&overlap_cord)) {
             snake_size++;
-            apples_bm_sel(i, j, 0);
+            apples_bm_sel(overlap_cord.i, overlap_cord.j, 0);
         }
         Pair body_ev = addPair(&snake_body_his, i, j, snake_size);
         Pair head_ev = addPair(&snake_head_his, i, j, 1);

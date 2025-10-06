@@ -4,6 +4,8 @@
 #include "system.h"
 #include "pio.h"
 #include "pacer.h"
+#include "apples.h"
+#include "movement_his.h"
 
 
 /** Define PIO pins driving LED matrix rows. */
@@ -40,6 +42,6 @@ void display_apple(uint8_t i_display,uint8_t j_display);
 
 void coord_generator(void);
 
-bool apple_eaten(void);
+bool apple_eaten(Pair *out_pair);
 
 #endif /* LEDMAT_H */

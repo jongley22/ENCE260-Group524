@@ -3,6 +3,7 @@
 #include "pacer.h"
 #include "led_selector.h"
 #include "apples.h"
+#include "movement_his.h"
 
 static uint8_t current_column = 0; 
 /** Define PIO pins driving LED matrix rows.  */
@@ -182,14 +183,23 @@ void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
     }
 }
 
-bool apple_eaten(void) {
-    for (int j = 0; j < 5; j++) {
-        if ((apples_bm[j] & snake_head_bm[j]) != 0) {
-            return true;  // Found at least one overlapping bit
+
+bool apple_eaten(Pair *out_pair) {
+    for (int j = 0; j < 5; j++) {           // each row
+        uint8_t overlap = snake_head_bm[j] & apples_bm[j];
+        if (overlap != 0) {                 // found at least one overlap in this row
+            for (int i = 0; i < 8; i++) {   // check each bit in the row
+                if (overlap & (1 << i)) {
+                    out_pair->i = i;
+                    out_pair->j = j;
+                    return true;
+                }
+            }
         }
     }
-    return false; // No overlap
+    return false; // no overlap
 }
+
 
 void bitmap_complier(void)
 {
