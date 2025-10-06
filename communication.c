@@ -18,6 +18,8 @@ static uint8_t j_opp;
 static uint8_t i = 3;
 static uint8_t j = 2;
 
+static uint8_t snake_size = 1;
+
 
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
@@ -56,7 +58,11 @@ void movement(void)
     }
 
     if (i_changed || j_changed) {
-        Pair body_ev = addPair(&snake_body_his, i, j, 4);
+        if (apple_eaten()) {
+            snake_size++;
+            apples_bm_sel(i, j, 0);
+        }
+        Pair body_ev = addPair(&snake_body_his, i, j, snake_size);
         Pair head_ev = addPair(&snake_head_his, i, j, 1);
 
         // Turn the value into an "optional pointer":

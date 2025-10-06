@@ -40,4 +40,6 @@ void display_apple(uint8_t i_display,uint8_t j_display);
 
 void coord_generator(void);
 
+bool apple_eaten(void);
+
 #endif /* LEDMAT_H */

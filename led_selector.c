@@ -104,7 +104,6 @@ void led_init(void)
   
     system_init ();
     pacer_init (500);
-    
     /* TODO: Initialise LED matrix pins.  */
     for (uint8_t i = 0; i < 7; i++) {
         pio_config_set(rows[i], PIO_OUTPUT_HIGH);
@@ -181,6 +180,15 @@ void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
             apples_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
         }
     }
+}
+
+bool apple_eaten(void) {
+    for (int j = 0; j < 5; j++) {
+        if ((apples_bm[j] & snake_head_bm[j]) != 0) {
+            return true;  // Found at least one overlapping bit
+        }
+    }
+    return false; // No overlap
 }
 
 void bitmap_complier(void)
