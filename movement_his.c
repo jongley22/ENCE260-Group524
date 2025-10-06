@@ -1,5 +1,6 @@
 #include "movement_his.h"
 #include <string.h> // for memmove
+#include <stdbool.h>
 
 void init_move_his(PairList *list) {
     list->num_pairs = 0;
@@ -37,17 +38,30 @@ Pair addPair(PairList *list, int i, int j, int max_pairs) {
     return removed;
 }
 
-void printList(const PairList *list, const Pair *old_tuple) {
-    printf("[ ");
-    for (int k = 0; k < list->num_pairs; k++) {
-        printf("(%d, %d) ", list->tuple[k].i, list->tuple[k].j);
+bool overlap_snake_history(PairList *list, int i, int j)
+{
+    for (int x = 0; x < 35; x++) { //only works for one matrice
+        if ((list->tuple[x].i == i) && (list->tuple[x].j == j)) {
+            return true;
+        }
     }
-    printf("]");
-    if (old_tuple && (old_tuple->i != -1 || old_tuple->j != -1)) {
-        printf("  removed: (%d, %d)", old_tuple->i, old_tuple->j);
-    }
-    printf("\n");
+    return false;
 }
+
+
+// void printList(const PairList *list, const Pair *old_tuple) {
+//     printf("[ ");
+//     for (int k = 0; k < list->num_pairs; k++) {
+//         printf("(%d, %d) ", list->tuple[k].i, list->tuple[k].j);
+//     }
+//     printf("]");
+//     if (old_tuple && (old_tuple->i != -1 || old_tuple->j != -1)) {
+//         printf("  removed: (%d, %d)", old_tuple->i, old_tuple->j);
+//     }
+//     printf("\n");
+// }
+
+
 
 
 

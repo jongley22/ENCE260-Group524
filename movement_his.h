@@ -2,6 +2,7 @@
 #define MOVEMENT_HIS_H
 
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef struct {
     int i;
@@ -24,6 +25,8 @@ void init_move_his(PairList *list);
  */
 Pair addPair(PairList *list, int i, int j, int max_pairs);
 
-void printList(const PairList *list, const Pair *old_tuple);
+bool overlap_snake_history(PairList *list, int i, int j);
+
+// void printList(const PairList *list, const Pair *old_tuple);
 
 #endif

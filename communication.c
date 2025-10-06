@@ -6,6 +6,7 @@
 #include "../fonts/font5x7_1.h"
 #include "led_selector.h"
 #include "movement_his.h"
+#include <stdbool.h>
     
 
 // pack the coords 
@@ -37,10 +38,22 @@ void movement(void)
 
     navswitch_update();
 
-    if (navswitch_push_event_p(NAVSWITCH_EAST)) { j++; j_changed = 1; }
-    if (navswitch_push_event_p(NAVSWITCH_WEST)) { j--; j_changed = 1; }
-    if (navswitch_push_event_p(NAVSWITCH_NORTH)) { i--; i_changed = 1; }
-    if (navswitch_push_event_p(NAVSWITCH_SOUTH)) { i++; i_changed = 1; }
+    if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body, i, j+1))) { 
+        j++; 
+        j_changed = 1; 
+    }
+    if (navswitch_push_event_p(NAVSWITCH_WEST) && !(overlap_snake_history(&snake_body, i, j-1))) { 
+        j--; 
+        j_changed = 1; 
+    }
+    if (navswitch_push_event_p(NAVSWITCH_NORTH) && !(overlap_snake_history(&snake_body, i-1, j))) { 
+        i--; 
+        i_changed = 1; 
+    }
+    if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body, i+1, j))) { 
+        i++; 
+        i_changed = 1; 
+    }
 
     if (i_changed || j_changed) {
         Pair ev = addPair(&snake_body, i, j, 4);
@@ -86,7 +99,7 @@ void communication(void)
         ir_uart_putc(user_cords); 
 
     } else {
-        snake_head_bm_sel(i,j,1);
+        snake_head_bm_sel(i,j,1); 
         bitmap_complier();
 
     }

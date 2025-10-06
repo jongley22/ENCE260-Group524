@@ -25,7 +25,7 @@ int main (void)
 
     tinygl_init(PACER_RATE);
     coord_generator();
-    init_move_his(&snake_body);  // max 5 pairs (<=70) "snake_body extern declared in "
+    init_move_his(&snake_body);  // max 5 pairs (<=70) "snake_body extern declared in 
 
     while (1)
     {

@@ -148,7 +148,7 @@ void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        display_bitmap[j_search] = apples_bm[j_search] | snake_head_bm[j_search] ; // snake_head_bm[j_search] || 
+        display_bitmap[j_search] = snake_head_bm[j_search]; // | apples_bm[j_search] ; // snake_head_bm[j_search] || 
     }
 }
 

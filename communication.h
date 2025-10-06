@@ -2,6 +2,7 @@
 #define COMMUNICATION_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /* Pack i and j (0–7 each) into one byte */
 uint8_t pack_position(uint8_t x, uint8_t y);
