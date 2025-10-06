@@ -9,7 +9,8 @@
 #include "movement_his.h"
 #include "apples.h"
 
-PairList snake_body; //right now will be 1
+PairList snake_body_his; //right now will be 1
+PairList snake_head_his;
 
 #define PACER_RATE 50
 int main (void)
@@ -25,7 +26,9 @@ int main (void)
 
     tinygl_init(PACER_RATE);
     coord_generator();
-    init_move_his(&snake_body);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_move_his(&snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_move_his(&snake_head_his);
+
 
     while (1)
     {

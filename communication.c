@@ -38,25 +38,25 @@ void movement(void)
 
     navswitch_update();
 
-    if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body, i, j+1))) { 
+    if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body_his, i, j+1))) { 
         j++; 
         j_changed = 1; 
     }
-    if (navswitch_push_event_p(NAVSWITCH_WEST) && !(overlap_snake_history(&snake_body, i, j-1))) { 
+    if (navswitch_push_event_p(NAVSWITCH_WEST) && !(overlap_snake_history(&snake_body_his, i, j-1))) { 
         j--; 
         j_changed = 1; 
     }
-    if (navswitch_push_event_p(NAVSWITCH_NORTH) && !(overlap_snake_history(&snake_body, i-1, j))) { 
+    if (navswitch_push_event_p(NAVSWITCH_NORTH) && !(overlap_snake_history(&snake_body_his, i-1, j))) { 
         i--; 
         i_changed = 1; 
     }
-    if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body, i+1, j))) { 
+    if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i+1, j))) { 
         i++; 
         i_changed = 1; 
     }
 
     if (i_changed || j_changed) {
-        Pair ev = addPair(&snake_body, i, j, 4);
+        Pair ev = addPair(&snake_body_his, i, j, 4);
 
         // Turn the value into an "optional pointer":
         // NULL means "no eviction"; otherwise points to ev.
@@ -65,7 +65,7 @@ void movement(void)
 
         // Same pattern as your printList:
         if (old_tuple && (old_tuple->i != -1 || old_tuple->j != -1)) {
-            snake_head_bm_sel(old_tuple->i, old_tuple->j, 0);
+            snake_body_bm_sel(old_tuple->i, old_tuple->j, 0);
         }
     }
     j_changed = 0, i_changed = 0;
@@ -99,6 +99,7 @@ void communication(void)
         ir_uart_putc(user_cords); 
 
     } else {
+        snake_body_bm_sel(i,j,1);
         snake_head_bm_sel(i,j,1); 
         bitmap_complier();
 
