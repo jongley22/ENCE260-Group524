@@ -65,7 +65,7 @@ uint8_t apples_display_bm[] =
     0b00000000 
 };
 
-uint8_t apples_bm[] =
+uint8_t apples_on_bm[] =
 {
     0b00000000,
     0b00000000,
@@ -181,13 +181,13 @@ void snake_body_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
     }
 }
 
-void _sel(uint8_t i, uint8_t j, uint8_t bol)
+void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
 {
     if (i < 7 && j < 5) { // Validate indices
         if (bol) {
-            [j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
+            apples_on_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
         } else {
-            [j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
+            apples_on_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
         }
     }
 }
@@ -195,7 +195,7 @@ void _sel(uint8_t i, uint8_t j, uint8_t bol)
 
 bool apple_eaten(Pair *out_pair) {
     for (int j = 0; j < 5; j++) {           // each row
-        uint8_t overlap = snake_head_bm[j] & [j];
+        uint8_t overlap = snake_head_bm[j] & apples_on_bm[j];
         if (overlap != 0) {                 // found at least one overlap in this row
             for (int i = 0; i < 8; i++) {   // check each bit in the row
                 if (overlap & (1 << i)) {
@@ -213,7 +213,7 @@ bool apple_eaten(Pair *out_pair) {
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | [j_search]; // snake_head_bm[j_search] || 
+        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search]; // snake_head_bm[j_search] || 
     }
 }
 
