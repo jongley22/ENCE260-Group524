@@ -55,8 +55,25 @@ static uint8_t snake_body_bm[] =
     0b00000000
 };
 
+static uint8_t opp_snake_head_bm[] =
+{
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000
+};
 
-uint8_t apples_display_bm[] =
+static uint8_t opp_snake_body_bm[] =
+{
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000
+};
+
+static uint8_t apples_display_bm[] =
 {
     0b00000000,
     0b00000000,
@@ -65,7 +82,7 @@ uint8_t apples_display_bm[] =
     0b00000000 
 };
 
-uint8_t apples_on_bm[] =
+static uint8_t apples_on_bm[] =
 {
     0b00000000,
     0b00000000,
@@ -74,7 +91,7 @@ uint8_t apples_on_bm[] =
     0b00000000 
 };
 
-uint8_t blank_bm[] =
+static uint8_t blank_bm[] =
 {
     0b00000000,
     0b00000000,
@@ -181,6 +198,29 @@ void snake_body_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
     }
 }
 
+void op_snake_body_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
+{
+    if (i < 7 && j < 5) { // Validate indices
+        if (bol) {
+            opp_snake_body_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
+        } else {
+            opp_snake_body_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
+        }
+    }
+}
+
+void op_snake_head_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
+{
+    if (i < 7 && j < 5) { // Validate indices
+        if (bol) {
+            opp_snake_head_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
+        } else {
+            opp_snake_head_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
+        }
+    }
+}
+
+
 void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
 {
     if (i < 7 && j < 5) { // Validate indices
@@ -213,7 +253,6 @@ bool apple_eaten(Pair *out_pair) {
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_display_bm[j_search]; // snake_head_bm[j_search] || 
+        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search] | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search]; // snake_head_bm[j_search] || 
     }
 }
-

@@ -10,12 +10,15 @@ typedef struct {
 } Pair;
 
 typedef struct {
-    Pair tuple[70];   // fixed physical capacity
+    Pair tuple[20];   // fixed physical capacity
     int num_pairs;    // current count
 } PairList;
 
 extern PairList snake_body_his;
 extern PairList snake_head_his;
+
+extern PairList opp_snake_body_his;
+extern PairList opp_snake_head_his;
 
 void init_move_his(PairList *list);
 

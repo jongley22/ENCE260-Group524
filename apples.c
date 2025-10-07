@@ -35,15 +35,15 @@ void display_apple(uint8_t i_display,uint8_t j_display){
 
 }
 
-void apple_flasher(void){
+// void apple_flasher(void){
 
-     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        apples_display_bm[j_search] = apples_on_bm[j_search];
-    }
-    // pacer_wait();
-    //  for (uint8_t j_search = 0; j_search < 5; j_search++) {
-    //     apples_display_bm[j_search] = blank_bm[j_search];
-    // }
-    // pacer_wait();
+//      for (uint8_t j_search = 0; j_search < 5; j_search++) {
+//         apples_display_bm[j_search] = apples_on_bm[j_search];
+//     }
+//     // pacer_wait();
+//     //  for (uint8_t j_search = 0; j_search < 5; j_search++) {
+//     //     apples_display_bm[j_search] = blank_bm[j_search];
+//     // }
+//     // pacer_wait();
    
-}
+// }

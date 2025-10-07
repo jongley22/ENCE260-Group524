@@ -16,6 +16,8 @@
 static uint8_t i_opp;
 static uint8_t j_opp;
 
+static uint8_t opp_snake_size;
+
 static uint8_t i = 3;
 static uint8_t j = 2;
 
@@ -36,11 +38,27 @@ uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
     return ((x_p & 0x07) << 3) | (y_p & 0x07);snake_body_bm_sel(2,3,0);
 }
 
-void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input pointer
+uint8_t pack_size(uint8_t size)
 {
-    *x_unp = (packed >> 3) & 0x07;  // upper 3 bits change me value of pointer
-    *y_unp = packed & 0x07;
-          // lower 3 bits
+    return (0xB0 | (size & 0x0F));
+}
+
+void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp, uint8_t *size)
+{
+    uint8_t high_nibble = (packed >> 4) & 0x0F;
+    uint8_t low_nibble = packed & 0x0F;
+
+    if (high_nibble == 0x0B)  // If upper nibble is 0xB (1011), it's a size value
+    {
+        *size = low_nibble;
+        // Don't touch x_unp or y_unp
+    }
+    else
+    {
+        *x_unp = high_nibble;
+        *y_unp = low_nibble;
+        // Don't touch size
+    }
 }
 
 void movement(void)
@@ -92,7 +110,7 @@ void movement(void)
         // NULL means "no eviction"; otherwise points to body_ev.
         const Pair *body_old_tuple =
             (body_ev.i == -1 && body_ev.j == -1) ? NULL : &body_ev;
-
+ 
         //now head
         const Pair *head_old_tuple =
             (head_ev.i == -1 && head_ev.j == -1) ? NULL : &head_ev;
@@ -114,7 +132,9 @@ void communication(void)
 {
     // receive_turnn();
     uint8_t user_cords;
-    uint8_t opp_coords;
+    uint8_t user_size;
+
+    uint8_t opp_info;
     uint8_t move_made = ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_WEST))||
                         (navswitch_push_event_p (NAVSWITCH_SOUTH))||(navswitch_push_event_p (NAVSWITCH_WEST)));
 
@@ -132,16 +152,40 @@ void communication(void)
 
     // }
 
-    if (ir_uart_read_ready_p ()){
-        opp_coords = ir_uart_getc ();
-        unpack_position(opp_coords, &i_opp, &j_opp);
+    if (ir_uart_read_ready_p ()) { //reciver
+        opp_info = ir_uart_getc ();
+        unpack_position(opp_info, &i_opp, &j_opp, &opp_snake_size);
         led_selector(6-i_opp,4-j_opp,1);
+
+        Pair oppbody_ev = addPair(&opp_snake_body_his, 6-i_opp, 4-j_opp, opp_snake_size);
+        Pair opphead_ev = addPair(&opp_snake_head_his, 6-i_opp, 4-j_opp, 1);
+
+        // Turn the value into an "optional pointer":
+        // NULL means "no eviction"; otherwise points to oppbody_ev.
+        const Pair *oppbody_old_tuple =
+            (oppbody_ev.i == -1 && oppbody_ev.j == -1) ? NULL : &oppbody_ev;
+
+        // now head
+        const Pair *oppp_head_old_tuple =
+            (opphead_ev.i == -1 && opphead_ev.j == -1) ? NULL : &opphead_ev;
+
+        // if equal to -1 body is extending so if it’s not, turn off last LED body
+        if (oppbody_old_tuple && (oppbody_old_tuple->i != -1 || oppbody_old_tuple->j != -1)) {
+            snake_body_bm_sel(oppbody_old_tuple->i, oppbody_old_tuple->j, 0);
+        }
+
+        if (oppp_head_old_tuple && (oppp_head_old_tuple->i != -1 || oppp_head_old_tuple->j != -1)) {
+            snake_head_bm_sel(oppp_head_old_tuple->i, oppp_head_old_tuple->j, 0);
+        }
+
 
     }
 
     if (j>4 && move_made) {
         user_cords = pack_position(i,j-3);
+        user_size = pack_size(snake_size);
         ir_uart_putc(user_cords); 
+        ir_uart_putc(user_size);  //can I do this 
 
     } else  {
         snake_body_bm_sel(i,j,1);

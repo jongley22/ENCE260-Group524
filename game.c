@@ -16,6 +16,11 @@
 PairList snake_body_his; //right now will be 1
 PairList snake_head_his;
 
+PairList opp_snake_body_his; //right now will be 1
+PairList opp_snake_head_his;
+
+
+
 #define PACER_RATE 50
 int main (void)
 {
@@ -33,10 +38,13 @@ int main (void)
     init_move_his(&snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
     init_move_his(&snake_head_his);
 
+    init_move_his(&opp_snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_move_his(&opp_snake_head_his);
+
 
     while (1)
     {
-    apple_flasher();
+    // apple_flasher();
     led_while(); 
     movement();
     communication();
