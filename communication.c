@@ -46,7 +46,7 @@ void movement(void)
 
 
     navswitch_update();
-    if (first_turn || receive_turnn()) {    
+    if (first_turn || turn) {    
 
     led_set (LED1, 1);
 
@@ -106,7 +106,7 @@ void movement(void)
     j_changed = 0, i_changed = 0;
 }
 
-void communication(void)  void
+void communication(void) 
 {
     receive_turnn();
     uint8_t user_cords;
@@ -134,22 +134,17 @@ void communication(void)  void
         led_selector(6-i_opp,4-j_opp,1);
 
     }
-bool receive_turnn(void)
+
 
     if (j>4 && move_made) {
         user_cords = pack_position(i,j-3);
         ir_uart_putc(user_cords); 
 
     } else  {
-        snake_body_bm_sel(ivoid,j,1);
+        snake_body_bm_sel(i,j,1);
         snake_head_bm_sel(i,j,1); 
         bitmap_complier();
         
-        
-        
-        
-
-
     }
    
 }
