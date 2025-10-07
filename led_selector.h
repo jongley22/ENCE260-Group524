@@ -32,7 +32,7 @@ void display_column(uint8_t row_pattern, uint8_t current_column);
 
 void led_while(void);
 
-void led_init(void);
+void led_init_custom(void);
 
 void led_selector(uint8_t i, uint8_t j, uint8_t bol);
 

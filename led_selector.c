@@ -108,7 +108,7 @@ void display_column (uint8_t row_pattern, uint8_t current_column)
     prev_col = current_column; 
 }
 
-void led_init(void) 
+void led_init_custom(void) 
 {
 
   

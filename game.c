@@ -21,9 +21,9 @@ int main (void)
     srand(2232136546512532612535463512563615242532612535463321365);  // seed 
     system_init ();
     navswitch_init ();  
-    led_init();
+    led_init_custom();
     ir_uart_init ();
-
+    led_init();
 
     pacer_init (PACER_RATE*5);
 

@@ -7,6 +7,7 @@
 #include "led_selector.h"
 #include "movement_his.h"
 #include <stdbool.h>
+#include "led.h"
 #define TURN_HEADER 0xF0  // 1111 0000
 
 // pack the coords 
@@ -45,7 +46,7 @@ void movement(void)
 
     navswitch_update();
     if (first_turn || receive_turnn()) {    
-    //led_set (LED1, 1);
+    led_set (LED1, 1);
     if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body_his, i, j+1))) { 
         j++; 
         j_changed = 1; 
@@ -61,13 +62,14 @@ void movement(void)
     if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i+1, j))) { 
         i++; 
         i_changed = 1; 
-        first_turn = false;   // after the very first move, rely on IR packets
     }
     }
 
     if (i_changed || j_changed) {
+        first_turn = false;   // after the very first move, rely on IR packets
+
         // Showing it's no longer your turn 
-        // led_set (LED1, 0);
+         led_set (LED1, 0);
         
         Pair overlap_cord;
 
@@ -163,6 +165,7 @@ bool receive_turnn(void)
     }
     uint8_t val = ir_uart_getc();
     if ((val & 0xF0) == TURN_HEADER) {
+        first_turn = false;
         return (val & 0x01) != 0;
     }
     return false;

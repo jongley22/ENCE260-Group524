@@ -46,7 +46,7 @@ ledmat.o: ../../drivers/ledmat.c ../../drivers/avr/pio.h ../../drivers/avr/syste
 navswitch.o: ../../drivers/navswitch.c ../../drivers/avr/delay.h ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/navswitch.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-communication.o: communication.c communication.h ../../drivers/avr/ir_uart.h ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font5x7_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h led_selector.h movement_his.h
+communication.o: communication.c communication.h ../../drivers/avr/ir_uart.h ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font5x7_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h led_selector.h movement_his.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 usart1.o: ../../drivers/avr/usart1.c ../../drivers/avr/system.h ../../drivers/avr/usart1.h
@@ -67,9 +67,13 @@ prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/prescale.h ../../driv
 movement_his.o: movement_his.c movement_his.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+led.o: ../../drivers/led.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/led.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+
 apples.o: apples.c apples.h ../../drivers/avr/system.h led_selector.h
 # Link: create ELF output file from object files.
-game.out: game.o system.o pacer.o timer0.o led_selector.o tinygl.o display.o font.o ledmat.o communication.o ir_uart.o usart1.o navswitch.o timer.o prescale.o movement_his.o apples.o
+game.out: game.o system.o pacer.o timer0.o led_selector.o tinygl.o display.o font.o ledmat.o communication.o ir_uart.o usart1.o navswitch.o timer.o prescale.o movement_his.o apples.o led.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
