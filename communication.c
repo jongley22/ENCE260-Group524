@@ -22,6 +22,7 @@ static uint8_t snake_size = 1;
 
 
 
+
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
     return ((x_p & 0x07) << 3) | (y_p & 0x07);snake_body_bm_sel(2,3,0);
@@ -38,7 +39,7 @@ void movement(void)
 {
     uint8_t j_changed = 0, i_changed = 0;
 
-    static uint8_t first_move = 0;
+
 
     navswitch_update();
 
