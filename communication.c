@@ -157,7 +157,7 @@ void communication(void)
         unpack_position(opp_info, &i_opp, &j_opp, &opp_snake_size);
         led_selector(6-i_opp,4-j_opp,1);
 
-        Pair oppbody_ev = addPair(&opp_snake_body_his, 6-i_opp, 4-j_opp, opp_snake_size);
+        Pair oppbody_ev = addPair(&opp_snake_body_his, 6-i_opp, 4-j_opp, 2);
         Pair opphead_ev = addPair(&opp_snake_head_his, 6-i_opp, 4-j_opp, 1);
 
         // Turn the value into an "optional pointer":
@@ -183,9 +183,9 @@ void communication(void)
 
     if (j>4 && move_made) {
         user_cords = pack_position(i,j-3);
-        user_size = pack_size(snake_size);
+        // user_size = pack_size(snake_size);
         ir_uart_putc(user_cords); 
-        ir_uart_putc(user_size);  //can I do this 
+        // ir_uart_putc(user_size);  //can I do this 
 
     } else  {
         snake_body_bm_sel(i,j,1);
