@@ -15,7 +15,7 @@ PairList snake_head_his;
 #define PACER_RATE 50
 int main (void)
 {
-    srand(time(NULL));  // seed 
+    srand(2232136546512532612535463512563615242532612535463321365);  // seed 
     system_init ();
     navswitch_init ();  
     led_init();
