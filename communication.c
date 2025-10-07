@@ -143,6 +143,11 @@ void communication(void)
     if (j>4 && move_made) {
         user_cords = pack_position(i,j-3);
         ir_uart_putc(user_cords); 
+    }
+    else if (j<4 && move_made) {
+        user_cords = pack_position(i,j+5);
+        ir_uart_putc(user_cords); 
+        
 
     } else  {
         snake_body_bm_sel(i,j,1);
