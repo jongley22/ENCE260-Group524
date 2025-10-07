@@ -11,5 +11,5 @@
 // Function declarations
 void coord_generator(void);
 void display_apple(uint8_t i_display, uint8_t j_display);
-
+void apple_flasher(void);
 #endif // APPLE_LOGIC_H

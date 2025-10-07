@@ -32,7 +32,7 @@ int main (void)
 
     while (1)
     {
-    
+    apple_flasher();
     led_while(); 
     movement();
     communication();

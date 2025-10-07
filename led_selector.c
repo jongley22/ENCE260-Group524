@@ -213,7 +213,7 @@ bool apple_eaten(Pair *out_pair) {
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search]; // snake_head_bm[j_search] || 
+        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_display_bm[j_search]; // snake_head_bm[j_search] || 
     }
 }
 
