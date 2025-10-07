@@ -40,7 +40,7 @@ Pair addPair(PairList *list, int i, int j, int max_pairs) {
 
 bool overlap_snake_history(PairList *list, int i, int j)
 {
-    for (int x = 0; x < 35; x++) { //only works for one matrice
+    for (int x = 0; x < list->num_pairs; x++) { //only works for one matrice
         if ((list->tuple[x].i == i) && (list->tuple[x].j == j)) {
             return true;
         }
