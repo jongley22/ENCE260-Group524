@@ -35,7 +35,7 @@ static uint8_t snake_size = 1;
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
-    return ((x_p & 0x07) << 3) | (y_p & 0x07);snake_body_bm_sel(2,3,0);
+    return ((x_p & 0x07) << 3) | (y_p & 0x07);
 }
 
 uint8_t pack_size(uint8_t size)
@@ -132,9 +132,9 @@ void communication(void)
 {
     // receive_turnn();
     uint8_t user_cords;
-    uint8_t user_size;
+    // uint8_t user_size;
 
-    uint8_t opp_info;
+    uint8_t opp_cords;
     uint8_t move_made = ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_WEST))||
                         (navswitch_push_event_p (NAVSWITCH_SOUTH))||(navswitch_push_event_p (NAVSWITCH_WEST)));
 
@@ -153,11 +153,12 @@ void communication(void)
     // }
 
     if (ir_uart_read_ready_p ()) { //reciver
-        opp_info = ir_uart_getc ();
-        unpack_position(opp_info, &i_opp, &j_opp, &opp_snake_size);
-        led_selector(6-i_opp,4-j_opp,1);
+        opp_cords = ir_uart_getc ();
+        unpack_position(opp_cords, &i_opp, &j_opp, &opp_snake_size);
+        // led_selector(6-i_opp,4-j_opp,1);
 
-        Pair oppbody_ev = addPair(&opp_snake_body_his, 6-i_opp, 4-j_opp, 2);
+
+        Pair oppbody_ev = addPair(&opp_snake_body_his, 6-i_opp, 4-j_opp, 4);
         Pair opphead_ev = addPair(&opp_snake_head_his, 6-i_opp, 4-j_opp, 1);
 
         // Turn the value into an "optional pointer":
@@ -171,16 +172,16 @@ void communication(void)
 
         // if equal to -1 body is extending so if it’s not, turn off last LED body
         if (oppbody_old_tuple && (oppbody_old_tuple->i != -1 || oppbody_old_tuple->j != -1)) {
-            snake_body_bm_sel(oppbody_old_tuple->i, oppbody_old_tuple->j, 0);
+            op_snake_body_bm_sel(oppbody_old_tuple->i, oppbody_old_tuple->j, 0);
         }
 
         if (oppp_head_old_tuple && (oppp_head_old_tuple->i != -1 || oppp_head_old_tuple->j != -1)) {
-            snake_head_bm_sel(oppp_head_old_tuple->i, oppp_head_old_tuple->j, 0);
+            op_snake_head_bm_sel(oppp_head_old_tuple->i, oppp_head_old_tuple->j, 0);
         }
 
-
     }
-
+    op_snake_body_bm_sel(6-i_opp,4-j_opp,1);
+    op_snake_head_bm_sel(6-i_opp,4-j_opp,1); 
     if (j>4 && move_made) {
         user_cords = pack_position(i,j-3);
         // user_size = pack_size(snake_size);

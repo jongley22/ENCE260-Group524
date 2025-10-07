@@ -100,6 +100,15 @@ static uint8_t blank_bm[] =
     0b00000000 
 };
 
+static uint8_t led_bm[] = 
+{
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000,
+    0b00000000 
+};
+
 
 
 void display_column (uint8_t row_pattern, uint8_t current_column)
@@ -160,9 +169,9 @@ void led_selector(uint8_t i, uint8_t j, uint8_t bol)
 {
     if (i < 7 && j < 5) { // Validate indices
         if (bol) {
-            display_bitmap[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
+            led_bm[j] |= (1 << i); // Set bit i in display_bitmap[j] to 1
         } else {
-            display_bitmap[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
+            led_bm[j] &= ~(1 << i); // Clear bit i in display_bitmap[j] to 0
         }
     }
 }
@@ -253,6 +262,6 @@ bool apple_eaten(Pair *out_pair) {
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search] | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search]; // snake_head_bm[j_search] || 
+        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search] | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search] | led_bm[j_search]; // snake_head_bm[j_search] || 
     }
 }
