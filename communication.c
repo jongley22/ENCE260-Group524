@@ -7,20 +7,22 @@
 #include "led_selector.h"
 #include "movement_his.h"
 #include <stdbool.h>
-    
+#define TURN_HEADER 0xF0  // 1111 0000
 
 // pack the coords 
 
 
 static uint8_t i_opp;
 static uint8_t j_opp;
-
+static bool first_turn = true;
 static uint8_t i = 3;
 static uint8_t j = 2;
 
 static uint8_t snake_size = 1;
 
+bool receive_turnn(void);
 
+void send_turn(bool your_turn);
 
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
@@ -42,7 +44,8 @@ void movement(void)
 
 
     navswitch_update();
-
+    if (first_turn || receive_turnn()) {    
+    //led_set (LED1, 1);
     if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body_his, i, j+1))) { 
         j++; 
         j_changed = 1; 
@@ -58,10 +61,13 @@ void movement(void)
     if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i+1, j))) { 
         i++; 
         i_changed = 1; 
+        first_turn = false;   // after the very first move, rely on IR packets
+    }
     }
 
     if (i_changed || j_changed) {
-    
+        // Showing it's no longer your turn 
+        // led_set (LED1, 0);
         
         Pair overlap_cord;
 
@@ -95,7 +101,7 @@ void movement(void)
 
 void communication(void)  
 {
-    
+    receive_turnn();
     uint8_t user_cords;
     uint8_t opp_coords;
     uint8_t move_made = ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_WEST))||
@@ -108,6 +114,12 @@ void communication(void)
     //     ir_uart_putc(user_cords); 
     
     // }
+
+    if (move_made){
+        send_turn(true);
+        //led_set (LED1, 0);
+
+    }
 
     if (ir_uart_read_ready_p ()){
         opp_coords = ir_uart_getc ();
@@ -124,9 +136,35 @@ void communication(void)
         snake_body_bm_sel(i,j,1);
         snake_head_bm_sel(i,j,1); 
         bitmap_complier();
+        
+        
+        
+        
+
 
     }
    
 }
 
+// --------- Send whose turn it is ---------
+void send_turn(bool your_turn)
+{
+    uint8_t packet = TURN_HEADER | (your_turn ? 0x01 : 0x00);
+    ir_uart_putc(packet);
+}
+
+// --------- Receive and decode ---------
+// Returns true if it's YOUR turn, false otherwise.
+// If no turn packet available, returns false.
+bool receive_turnn(void)
+{
+    if (!ir_uart_read_ready_p()) {
+        return false;
+    }
+    uint8_t val = ir_uart_getc();
+    if ((val & 0xF0) == TURN_HEADER) {
+        return (val & 0x01) != 0;
+    }
+    return false;
+}
 

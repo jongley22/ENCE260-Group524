@@ -9,6 +9,9 @@
 #include "movement_his.h"
 #include "apples.h"
 
+//include led.h
+
+
 PairList snake_body_his; //right now will be 1
 PairList snake_head_his;
 
@@ -36,7 +39,7 @@ int main (void)
     led_while(); 
     movement();
     communication();
-    
+    receive_turnn();
     if (navswitch_release_event_p (NAVSWITCH_PUSH)){
         coord_generator();
         }
