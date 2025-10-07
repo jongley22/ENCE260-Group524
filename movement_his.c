@@ -3,7 +3,9 @@
 #include <stdbool.h>
 
 void init_move_his(PairList *list) {
-    list->num_pairs = 0;
+    list->tuple[0].i = 3;
+    list->tuple[0].j = 2;
+    list->num_pairs = 1;
 }
 
 static inline int clamp_max_pairs(int m) {

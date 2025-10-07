@@ -30,6 +30,7 @@ void display_apple(uint8_t i_display,uint8_t j_display){
     // led_selector(i_display,j_display,0);
     // pacer_wait();
     apples_bm_sel(i_display,j_display,1);
+    apples_bm_sel(0,0,0); //fixes 0,0 led being on init
     apple_counter++;
 
 }
