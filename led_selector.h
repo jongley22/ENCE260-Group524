@@ -14,6 +14,14 @@ static const pio_t rows[7];
 /** Define PIO pins driving LED matrix columns. */
 static const pio_t cols[5];
 
+extern uint8_t apples_bm[5];
+
+extern uint8_t blank_bm[5];
+
+
+extern uint8_t apples_display_bm[5];
+
+
 /** Bitmap for LED matrix display. */
 
 /** Function to display a column on the LED matrix.

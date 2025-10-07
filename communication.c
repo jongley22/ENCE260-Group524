@@ -24,7 +24,7 @@ static uint8_t snake_size = 1;
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
-    return ((x_p & 0x07) << 3) | (y_p & 0x07);
+    return ((x_p & 0x07) << 3) | (y_p & 0x07);snake_body_bm_sel(2,3,0);
 }
 
 void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input pointer
@@ -37,6 +37,8 @@ void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input po
 void movement(void)
 {
     uint8_t j_changed = 0, i_changed = 0;
+
+    static uint8_t first_move = 0;
 
     navswitch_update();
 
@@ -58,6 +60,7 @@ void movement(void)
     }
 
     if (i_changed || j_changed) {
+    
         
         Pair overlap_cord;
 
@@ -116,7 +119,7 @@ void communication(void)
         user_cords = pack_position(i,j-3);
         ir_uart_putc(user_cords); 
 
-    } else {
+    } else  {
         snake_body_bm_sel(i,j,1);
         snake_head_bm_sel(i,j,1); 
         bitmap_complier();
