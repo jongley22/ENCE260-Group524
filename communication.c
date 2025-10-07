@@ -25,10 +25,10 @@ static uint8_t snake_size = 1;
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
-    return ((x_p & 0x07) << 3) | (y_p & 0x07);snake_body_bm_sel(2,3,0);
+    return ((x_p & 0x07) << 3) | (y_p & 0x07);
 }
 
-void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input pointer
+void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp, uint8_t *size) // input pointer
 {
     *x_unp = (packed >> 3) & 0x07;  // upper 3 bits change me value of pointer
     *y_unp = packed & 0x07;
@@ -97,7 +97,7 @@ void communication(void)
 {
     
     uint8_t user_cords;
-    uint8_t opp_coords;
+    uint8_t opp_info;
     uint8_t move_made = ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_NORTH))||
                         (navswitch_push_event_p (NAVSWITCH_SOUTH))||(navswitch_push_event_p (NAVSWITCH_WEST)));
 
@@ -108,10 +108,15 @@ void communication(void)
     //     ir_uart_putc(user_cords); 
     
     // }
+    if (ir_uart_read_ready_p ()) {
+        opp_info = ir_uart_getc ();
+        unpack_position(opp_info, &i_opp, &j_opp);
 
-    if (ir_uart_read_ready_p ()){
-        opp_coords = ir_uart_getc ();
-        unpack_position(opp_coords, &i_opp, &j_opp);
+    }
+
+    if (ir_uart_read_ready_p ()) {
+        opp_info = ir_uart_getc ();
+        unpack_position(opp_info, &i_opp, &j_opp);
         // led_selector(6-i_opp,4-j_opp,1);
 
 
