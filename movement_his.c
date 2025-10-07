@@ -2,10 +2,14 @@
 #include <string.h> // for memmove
 #include <stdbool.h>
 
-void init_move_his(PairList *list) {
+void init_user_move_his(PairList *list) {
     list->tuple[0].i = 3;
     list->tuple[0].j = 2;
     list->num_pairs = 1;
+}
+
+void init_opp_move_his(PairList *list) {
+    list->num_pairs = 0;
 }
 
 static inline int clamp_max_pairs(int m) {

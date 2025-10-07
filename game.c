@@ -35,11 +35,11 @@ int main (void)
 
     tinygl_init(PACER_RATE);
     coord_generator();
-    init_move_his(&snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
-    init_move_his(&snake_head_his);
+    init_user_move_his(&snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_user_move_his(&snake_head_his);
 
-    init_move_his(&opp_snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
-    init_move_his(&opp_snake_head_his);
+    init_opp_move_his(&opp_snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_opp_move_his(&opp_snake_head_his);
 
 
     while (1)
@@ -48,7 +48,7 @@ int main (void)
     led_while(); 
     movement();
     communication();
-    // receive_turnn();
+    // receive_turnn();   movement();
     if (navswitch_release_event_p (NAVSWITCH_PUSH)){
         coord_generator();
         }

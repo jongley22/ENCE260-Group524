@@ -20,7 +20,9 @@ extern PairList snake_head_his;
 extern PairList opp_snake_body_his;
 extern PairList opp_snake_head_his;
 
-void init_move_his(PairList *list);
+void init_user_move_his(PairList *list);
+
+void init_opp_move_his(PairList *list);
 
 /**
  * Adds a pair (i, j) while enforcing a per-call maximum item count.
