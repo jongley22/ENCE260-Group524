@@ -8,6 +8,7 @@
 #include "tinygl.h"
 #include "movement_his.h"
 #include "apples.h"
+#include "led.h"
 
 //include led.h
 
@@ -39,7 +40,7 @@ int main (void)
     led_while(); 
     movement();
     communication();
-    receive_turnn();
+    // receive_turnn();
     if (navswitch_release_event_p (NAVSWITCH_PUSH)){
         coord_generator();
         }
