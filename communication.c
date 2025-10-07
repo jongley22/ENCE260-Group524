@@ -19,9 +19,10 @@ static bool first_turn = true;
 static uint8_t i = 3;
 static uint8_t j = 2;
 
-static uint8_t snake_size = 1;
+static  bool turn = false;
 
-bool receive_turnn(void);
+static uint8_t snake_size = 1;
+void receive_turnn(void);
 
 void send_turn(bool your_turn);
 
@@ -46,30 +47,34 @@ void movement(void)
 
     navswitch_update();
     if (first_turn || receive_turnn()) {    
+
     led_set (LED1, 1);
-    if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body_his, i, j+1))) { 
-        j++; 
-        j_changed = 1; 
-    }
-    if (navswitch_push_event_p(NAVSWITCH_WEST) && !(overlap_snake_history(&snake_body_his, i, j-1))) { 
-        j--; 
-        j_changed = 1; 
-    }
-    if (navswitch_push_event_p(NAVSWITCH_NORTH) && !(overlap_snake_history(&snake_body_his, i-1, j))) { 
-        i--; 
-        i_changed = 1; 
-    }
-    if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i+1, j))) { 
-        i++; 
-        i_changed = 1; 
-    }
+
+        if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body_his, i, j+1))) { 
+            j++; 
+            j_changed = 1; 
+        }
+        if (navswitch_push_event_p(NAVSWITCH_WEST) && !(overlap_snake_history(&snake_body_his, i, j-1))) { 
+            j--; 
+            j_changed = 1; 
+        }
+        if (navswitch_push_event_p(NAVSWITCH_NORTH) && !(overlap_snake_history(&snake_body_his, i-1, j))) { 
+            i--; 
+            i_changed = 1; 
+        }
+        if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i+1, j))) { 
+            i++; 
+            i_changed = 1; 
+        }
     }
 
     if (i_changed || j_changed) {
         first_turn = false;   // after the very first move, rely on IR packets
+        apples_bm_sel(0,0,1);
+        
 
         // Showing it's no longer your turn 
-         led_set (LED1, 0);
+
         
         Pair overlap_cord;
 
@@ -101,7 +106,7 @@ void movement(void)
     j_changed = 0, i_changed = 0;
 }
 
-void communication(void)  
+void communication(void)  void
 {
     receive_turnn();
     uint8_t user_cords;
@@ -119,7 +124,7 @@ void communication(void)
 
     if (move_made){
         send_turn(true);
-        //led_set (LED1, 0);
+        led_set (LED1, 0);
 
     }
 
@@ -129,13 +134,14 @@ void communication(void)
         led_selector(6-i_opp,4-j_opp,1);
 
     }
+bool receive_turnn(void)
 
     if (j>4 && move_made) {
         user_cords = pack_position(i,j-3);
         ir_uart_putc(user_cords); 
 
     } else  {
-        snake_body_bm_sel(i,j,1);
+        snake_body_bm_sel(ivoid,j,1);
         snake_head_bm_sel(i,j,1); 
         bitmap_complier();
         
@@ -158,16 +164,19 @@ void send_turn(bool your_turn)
 // --------- Receive and decode ---------
 // Returns true if it's YOUR turn, false otherwise.
 // If no turn packet available, returns false.
-bool receive_turnn(void)
+void receive_turnn(void)
 {
     if (!ir_uart_read_ready_p()) {
-        return false;
+        turn = false;
+        return;
     }
     uint8_t val = ir_uart_getc();
     if ((val & 0xF0) == TURN_HEADER) {
         first_turn = false;
-        return (val & 0x01) != 0;
+        turn = (val & 0x01) != 0;
+        return;
     }
-    return false;
+    turn = false;
+    return;
 }
 

@@ -15,7 +15,7 @@ void movement(void);
 
 void communication(void);
 
-uint8_t receive_turnn(void);
+void receive_turnn(void);
 
 void send_turn(bool your_turn);
 #endif
