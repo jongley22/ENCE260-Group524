@@ -23,7 +23,7 @@ void coord_generator(void) {
     
     
 }
-void display_apple(uint8_t i_display,uint8_t j_display){
+void display_apple(uint8_t i_display,uint8_t j_display) {
     // pacer_init (100);
     // led_selector(i_display,j_display,1);
     // pacer_wait();

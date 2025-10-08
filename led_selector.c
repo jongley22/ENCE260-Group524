@@ -251,7 +251,7 @@ void apples_bm_sel(uint8_t i, uint8_t j, uint8_t bol)
 }
 
 
-bool apple_eaten(Pair *out_pair) {
+bool user_apple_eaten(Pair *out_pair) {
     for (int j = 0; j < 5; j++) {           // each row
         uint8_t overlap = snake_head_bm[j] & apples_on_bm[j];
         if (overlap != 0) {                 // found at least one overlap in this row
@@ -267,11 +267,28 @@ bool apple_eaten(Pair *out_pair) {
     return false; // no overlap
 }
 
+bool opp_apple_eaten(Pair *out_pair) {
+    for (int j = 0; j < 5; j++) {           // each row
+        uint8_t overlap = opp_snake_head_bm[j] & apples_on_bm[j];
+        if (overlap != 0) {                 // found at least one overlap in this row
+            for (int i = 0; i < 8; i++) {   // check each bit in the row
+                if (overlap & (1 << i)) {
+                    out_pair->i = i;
+                    out_pair->j = j;
+                    return true;
+                }
+            }
+        }
+    }
+    return false; // no overlap
+}
 
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
         display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search] 
-                                | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search] | hiden_zone_bm[j_search]; // snake_head_bm[j_search] || 
+                                | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search] | hiden_zone_bm[j_search]; ;
     }
 }
+
+// snake_head_bm[j_search] || 

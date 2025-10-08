@@ -20,15 +20,17 @@ static uint8_t j = 2;
 
 static uint8_t snake_size = 1;
 
+static uint8_t opp_snake_size = 1;
+
 
 
 
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
-    return ((x_p & 0x07) << 3) | (y_p & 0x07);
+    return ((x_p & 0x07) << 3) | (y_p & 0x07);snake_body_bm_sel(2,3,0);
 }
 
-void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp, uint8_t *size) // input pointer
+void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input pointer
 {
     *x_unp = (packed >> 3) & 0x07;  // upper 3 bits change me value of pointer
     *y_unp = packed & 0x07;
@@ -65,10 +67,11 @@ void movement(void)
         
         Pair overlap_cord;
 
-        if (apple_eaten(&overlap_cord)) {
+        if (user_apple_eaten(&overlap_cord)) {
             snake_size++;
             apples_bm_sel(overlap_cord.i, overlap_cord.j, 0);
         }
+
         Pair body_ev = addPair(&snake_body_his, i, j, snake_size);
         Pair head_ev = addPair(&snake_head_his, i, j, 1);
 
@@ -97,9 +100,10 @@ void communication(void)
 {
     
     uint8_t user_cords;
-    uint8_t opp_info;
+    uint8_t opp_coords;
     uint8_t move_made = ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_NORTH))||
                         (navswitch_push_event_p (NAVSWITCH_SOUTH))||(navswitch_push_event_p (NAVSWITCH_WEST)));
+    Pair overlap_cord;
 
     // if ((navswitch_push_event_p (NAVSWITCH_EAST))||(navswitch_push_event_p (NAVSWITCH_WEST))||(navswitch_push_event_p (NAVSWITCH_SOUTH))||(navswitch_push_event_p (NAVSWITCH_WEST))){
             
@@ -108,19 +112,21 @@ void communication(void)
     //     ir_uart_putc(user_cords); 
     
     // }
-    if (ir_uart_read_ready_p ()) {
-        opp_info = ir_uart_getc ();
-        unpack_position(opp_info, &i_opp, &j_opp);
 
-    }
-
-    if (ir_uart_read_ready_p ()) {
-        opp_info = ir_uart_getc ();
-        unpack_position(opp_info, &i_opp, &j_opp);
+    if (ir_uart_read_ready_p ()){
+        opp_coords = ir_uart_getc ();
+        unpack_position(opp_coords, &i_opp, &j_opp);
         // led_selector(6-i_opp,4-j_opp,1);
 
+        if ((4-j_opp) == 0) {
+            opp_snake_size = 1;
+        }
 
-        Pair oppbody_ev = addPair(&opp_snake_body_his, 6-i_opp, 4-j_opp, 4);
+        if (opp_apple_eaten(&overlap_cord)) {
+            opp_snake_size++;
+            apples_bm_sel(overlap_cord.i, overlap_cord.j, 0);
+        }
+        Pair oppbody_ev = addPair(&opp_snake_body_his, 6-i_opp, 4-j_opp, opp_snake_size);
         Pair opphead_ev = addPair(&opp_snake_head_his, 6-i_opp, 4-j_opp, 1);
 
         // Turn the value into an "optional pointer":
@@ -162,5 +168,4 @@ void communication(void)
     }
    
 }
-
 
