@@ -9,6 +9,7 @@
 #include "movement_his.h"
 #include "apples.h"
 #include "led.h"
+#include "../fonts/font5x7_1.h"
 
 //include led.h
 
@@ -21,19 +22,32 @@ PairList opp_snake_head_his;
 
 
 
-#define PACER_RATE 50
+#define MESSAGE_RATE 5
+#define PACER_RATE 500
 int main (void)
 {
-    srand(2232136546512532612535463512563615242532612535463321365);  // seed 
+    srand(2232);  // seed 
     system_init ();
+
     navswitch_init ();  
     led_init_custom();
     ir_uart_init ();
     led_init();
 
-    pacer_init (PACER_RATE*5);
 
+    
+    // text initialising
     tinygl_init(PACER_RATE);
+    //tinygl_font_set(&font5x7_1);
+    tinygl_text_speed_set(MESSAGE_RATE);
+    tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
+
+    tinygl_text("WIN");
+
+    pacer_init (PACER_RATE);
+    
+    
+    
     coord_generator();
     init_user_move_his(&snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
     init_user_move_his(&snake_head_his);
