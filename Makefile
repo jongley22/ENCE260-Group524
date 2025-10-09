@@ -69,11 +69,14 @@ movement_his.o: movement_his.c movement_his.h
 
 led.o: ../../drivers/led.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
+	
+final_message.o: final_message.c final_message.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/avr/system.h ../../utils/pacer.h
+	$(CC) -c $(CFLAGS) $< -o $@
 
 
 apples.o: apples.c apples.h ../../drivers/avr/system.h led_selector.h
 # Link: create ELF output file from object files.
-game.out: game.o system.o pacer.o timer0.o led_selector.o tinygl.o display.o font.o ledmat.o communication.o ir_uart.o usart1.o navswitch.o timer.o prescale.o movement_his.o apples.o led.o
+game.out: game.o system.o pacer.o timer0.o led_selector.o tinygl.o display.o font.o ledmat.o communication.o ir_uart.o usart1.o navswitch.o timer.o prescale.o movement_his.o apples.o led.o final_message.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

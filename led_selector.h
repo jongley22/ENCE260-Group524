@@ -7,6 +7,12 @@
 #include "apples.h"
 #include "movement_his.h"
 
+extern bool game_running;
+
+/* Collision flags */
+extern bool user_head_opp_body_overlap;
+extern bool opp_head_user_body_overlap;
+extern bool head_to_head_overlap;
 
 /** Define PIO pins driving LED matrix rows. */
 static const pio_t rows[7];

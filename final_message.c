@@ -2,39 +2,25 @@
 #include "pacer.h"
 #include "tinygl.h"
 #include "../fonts/font5x7_1.h"
-
+#include "final_message.h"
 
 #define PACER_RATE 500
 #define MESSAGE_RATE 5
 
-int main (void)
+void final_message(const char *message)
 {
-    system_init();
+   
+    tinygl_init(PACER_RATE);
+    tinygl_font_set(&font5x7_1);
+    tinygl_text_speed_set(MESSAGE_RATE);
+    tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
 
-    /* TODO: Initialise tinygl. */
+    tinygl_text(message);
 
-    tinygl_init (PACER_RATE);
-    tinygl_font_set (&font5x7_1);
-    tinygl_text_speed_set (MESSAGE_RATE);
-    tinygl_text_mode_set (TINYGL_TEXT_MODE_SCROLL);
+    pacer_init(PACER_RATE);
 
-
-    // Only line to chage - if statement based on who died
-    tinygl_text("WIN");
-
-
-
-    /* TODO: Set the message using tinygl_text().  */
-    
-
-    pacer_init (PACER_RATE);
-
-    while(1)
-    {
+    while (1) {
         pacer_wait();
         tinygl_update();
-        /* TODO: Call the tinygl update function. */
-        
     }
-    return 0;
 }
