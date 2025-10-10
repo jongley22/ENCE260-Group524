@@ -7,20 +7,16 @@
 #define PACER_RATE 500
 #define MESSAGE_RATE 5
 
-void final_message(const char *message)
+void final_message(const char message)
 {
    
-    tinygl_init(PACER_RATE);
-    tinygl_font_set(&font5x7_1);
-    tinygl_text_speed_set(MESSAGE_RATE);
-    tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
+//     // tinygl_init(PACER_RATE);
+//     //tinygl_text(message);
 
-    tinygl_text(message);
+//     //pacer_init(PACER_RATE);
 
-    pacer_init(PACER_RATE);
-
-    while (1) {
-        pacer_wait();
-        tinygl_update();
-    }
-}
+//     // while (1) {
+//     //     pacer_wait();
+//     //     tinygl_update();
+//     // }
+ }

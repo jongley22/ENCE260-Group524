@@ -7,7 +7,7 @@
 #include "led_selector.h"
 #include "movement_his.h"
 #include <stdbool.h>
-
+    
 
 // pack the coords 
 
@@ -24,17 +24,29 @@ static uint8_t opp_snake_size = 1;
 
 
 
+
 uint8_t pack_position(uint8_t x_p, uint8_t y_p) //different from i and j
 {
-    return ((x_p & 0x07) << 3) | (y_p & 0x07);snake_body_bm_sel(2,3,0);
+    return ((x_p & 0x07) << 3) | (y_p & 0x07); snake_body_bm_sel(2,3,0);
 }
 
-void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp) // input pointer
+
+void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp)
 {
-    *x_unp = (packed >> 3) & 0x07;  // upper 3 bits change me value of pointer
-    *y_unp = packed & 0x07;
-          // lower 3 bits
+
+    if (packed & 0b10000000) {
+        game_running = false;
+    }
+
+    // Mask to ignore the 4th bit of each nibble
+    uint8_t high_nibble = (packed >> 3) & 0x0F;   // take 4 bits
+    *x_unp = high_nibble & 0x07;                  // ignore top bit, only 0–7 range
+
+    uint8_t low_nibble = packed & 0x0F;           // take 4 bits
+    *y_unp = low_nibble & 0x07;                   // ignore top bit, only 0–7 range
+
 }
+
 
 void movement(void)
 {
@@ -165,6 +177,6 @@ void communication(void)
         bitmap_complier();
 
     }
- 
-  
+   
 }
+

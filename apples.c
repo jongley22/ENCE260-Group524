@@ -15,7 +15,7 @@ void coord_generator(void) {
     
     
     int app_i = rand() % 7;  
-    int app_j = rand() % 5;  
+    int app_j = rand() % 4;  
     //int app_i = 1;  
     //int app_j = 1;  
     

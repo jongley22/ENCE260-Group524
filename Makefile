@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h led_selector.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/ledmat.h movement_his.h apples.h
+game.o: game.c ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h led_selector.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/ledmat.h ../../fonts/font5x7_1.h movement_his.h apples.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
@@ -69,10 +69,9 @@ movement_his.o: movement_his.c movement_his.h
 
 led.o: ../../drivers/led.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
-	
+
 final_message.o: final_message.c final_message.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/avr/system.h ../../utils/pacer.h
 	$(CC) -c $(CFLAGS) $< -o $@
-
 
 apples.o: apples.c apples.h ../../drivers/avr/system.h led_selector.h
 # Link: create ELF output file from object files.
