@@ -31,7 +31,7 @@ void init_opp_move_his(PairList *list);
  */
 Pair addPair(PairList *list, int i, int j, int max_pairs);
 
-bool overlap_snake_history(PairList *list, int i, int j);
+// bool overlap_snake_history(PairList *list, int i, int j);
 
 // void printList(const PairList *list, const Pair *old_tuple);
 
