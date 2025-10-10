@@ -65,8 +65,9 @@ int main (void)
     {
     // apple_flasher();
         game_finnished();
+        static bool locked_out = false;
         
-        if (game_running) {
+        if (game_running && (!locked_out)) {
             led_while(); 
             movement();
             apple_flasher();
@@ -79,6 +80,7 @@ int main (void)
 
         }   
         if (!game_running) {
+            locked_out = true;
             static uint8_t scenario = 0;
             death_screen();
             led_while(); 
@@ -94,7 +96,7 @@ int main (void)
             } else if (death_scenario == 5 || scenario == 160) {
                 ir_uart_putc(0b10100000);
             }
-            communication();  
+
 
             scenario = ir_uart_getc ();
 
