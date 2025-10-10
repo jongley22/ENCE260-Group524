@@ -7,7 +7,7 @@
 #include "led_selector.h"
 #include "movement_his.h"
 #include <stdbool.h>
-    
+
 
 // pack the coords 
 
@@ -21,7 +21,6 @@ static uint8_t j = 2;
 static uint8_t snake_size = 1;
 
 static uint8_t opp_snake_size = 1;
-
 
 
 
@@ -177,6 +176,6 @@ void communication(void)
         bitmap_complier();
 
     }
-   
+ 
+  
 }
-

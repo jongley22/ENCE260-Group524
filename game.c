@@ -19,6 +19,7 @@ PairList snake_head_his;
 
 PairList opp_snake_body_his; //right now will be 1
 PairList opp_snake_head_his;
+bool game_running = true; 
 
 uint8_t game_running = 1;
 uint8_t user_head_opp_body_overlap;
@@ -61,7 +62,8 @@ int main (void)
     init_opp_move_his(&opp_snake_head_his);
 
 
-    while (1)
+    //while (1)
+    while(game_running)
     {
     // apple_flasher();
         game_finnished();

@@ -69,6 +69,9 @@ movement_his.o: movement_his.c movement_his.h
 
 led.o: ../../drivers/led.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
+	
+final_message.o: final_message.c final_message.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/avr/system.h ../../utils/pacer.h
+	$(CC) -c $(CFLAGS) $< -o $@
 
 final_message.o: final_message.c final_message.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/avr/system.h ../../utils/pacer.h
 	$(CC) -c $(CFLAGS) $< -o $@
