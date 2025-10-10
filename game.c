@@ -65,9 +65,11 @@ int main (void)
     {
     // apple_flasher();
         game_finnished();
+        
         if (game_running) {
             led_while(); 
             movement();
+            apple_flasher();
             communication();
             // receive_turnn();   movement();
             if (navswitch_release_event_p (NAVSWITCH_PUSH)) {

@@ -5,6 +5,8 @@
 #include "apples.h"
 #include "movement_his.h"
 
+#define PACER_RATE 500 
+
 static uint8_t current_column = 0; 
 /** Define PIO pins driving LED matrix rows.  */
 static const pio_t rows[] =
@@ -267,6 +269,29 @@ bool user_apple_eaten(Pair *out_pair) {
     return false; // no overlap
 }
 
+void apple_flasher(void) {
+    uint64_t apple_rate = 10;
+    uint64_t max_tick = PACER_RATE / apple_rate;
+    static uint64_t ticker = 0;
+
+    if (ticker <= max_tick/2) {
+        for (uint8_t j_search = 0; j_search < 5; j_search++) {
+            apples_display_bm[j_search] = apples_on_bm[j_search];
+        }   
+    }
+    else if (ticker < max_tick) {   
+        for (uint8_t j_search = 0; j_search < 5; j_search++) {
+            apples_display_bm[j_search] = blank_bm[j_search];
+
+        }
+    }
+    else {
+        ticker = 0;
+    }
+    ticker++;
+}
+
+
 bool opp_apple_eaten(Pair *out_pair) {
     for (int j = 0; j < 5; j++) {           // each row
         uint8_t overlap = opp_snake_head_bm[j] & apples_on_bm[j];
@@ -286,7 +311,7 @@ bool opp_apple_eaten(Pair *out_pair) {
 void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
-        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search] 
+        display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_display_bm[j_search] 
                                 | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search] | hiden_zone_bm[j_search]; 
     }
 }
