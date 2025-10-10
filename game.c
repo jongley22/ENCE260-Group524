@@ -39,7 +39,7 @@ int main (void)
     init_user_move_his(&snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
     init_user_move_his(&snake_head_his);
 
-    init_opp_move_his(&opp_snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_opp_move_his(&opp_snake_body_his);  // max 5 pairs (<=70) "snake_sbody extern declared in 
     init_opp_move_his(&opp_snake_head_his);
 
 
