@@ -6,8 +6,14 @@
 #include "pacer.h"
 #include "apples.h"
 #include "movement_his.h"
+extern uint8_t death_scenario;
 
-
+extern uint8_t game_running;
+extern uint8_t user_head_opp_body_overlap;
+extern uint8_t opp_head_user_body_overlap;
+extern uint8_t head_to_head_overlap;
+extern uint8_t head_to_body_overlap;
+extern uint8_t opp_head_to_opp_body_overlap;
 /** Define PIO pins driving LED matrix rows. */
 static const pio_t rows[7];
 
@@ -52,5 +58,11 @@ void coord_generator(void);
 bool user_apple_eaten(Pair *out_pair);
 
 bool opp_apple_eaten(Pair *out_pair);
+
+// game state
+
+void game_finnished(void);
+
+void death_screen(void);
 
 #endif /* LEDMAT_H */

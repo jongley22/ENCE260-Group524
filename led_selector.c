@@ -287,8 +287,81 @@ void bitmap_complier(void)
 {
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
         display_bitmap[j_search] = snake_body_bm[j_search] | snake_head_bm[j_search] | apples_on_bm[j_search] 
-                                | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search] | hiden_zone_bm[j_search]; ;
+                                | opp_snake_body_bm[j_search] | opp_snake_head_bm[j_search] | hiden_zone_bm[j_search]; 
+    }
+}
+
+void death_screen(void) {
+
+    for (uint8_t j_search = 0; j_search < 5; j_search++) {
+        display_bitmap[j_search] = blank_bm[j_search];
     }
 }
 
 // snake_head_bm[j_search] || 
+void game_finnished(void)
+{
+    bool hit = false;
+
+    // reset flags for this tick
+    user_head_opp_body_overlap      = false;
+    opp_head_user_body_overlap      = false;
+    head_to_head_overlap            = false;
+    head_to_body_overlap            = false;
+    opp_head_to_opp_body_overlap    = false;
+
+    for (int col = 0; col < 5 && !hit; col++) {
+        uint8_t head      = snake_head_bm[col];
+        uint8_t body      = snake_body_bm[col];
+        uint8_t opp_head  = opp_snake_head_bm[col];
+        uint8_t opp_body  = opp_snake_body_bm[col];
+
+        // exclude heads from their own bodies when checking self-collision
+        uint8_t body_no_head     = body & ~head;
+        uint8_t opp_body_no_head = opp_body & ~opp_head;
+
+        user_head_opp_body_overlap   = (head     & opp_body_no_head) != 0;
+        opp_head_user_body_overlap   = (opp_head & body_no_head)     != 0;
+        head_to_head_overlap         = (head     & opp_head)         != 0;
+        head_to_body_overlap         = (head     & body_no_head)     != 0;
+        opp_head_to_opp_body_overlap = (opp_head & opp_body_no_head) != 0;
+
+        hit = user_head_opp_body_overlap || opp_head_user_body_overlap ||
+              head_to_head_overlap || head_to_body_overlap || opp_head_to_opp_body_overlap;
+    }
+
+    if (hit) {
+        
+        game_running = false;
+    if (user_head_opp_body_overlap) {
+    // player head hit opponent body
+    game_running = false;
+    death_scenario = 1;
+}
+
+if (opp_head_user_body_overlap) {
+    // opponent head hit player body
+    game_running = false;
+    death_scenario = 2;
+}
+
+if (head_to_head_overlap) {
+    // both heads collided
+    game_running = false;
+    death_scenario = 3;
+}
+
+if (head_to_body_overlap) {
+    // player head hit its own body
+    game_running = false;
+    death_scenario = 4;
+}
+
+if (opp_head_to_opp_body_overlap) {
+    // opponent head hit its own body
+    game_running = false;
+    death_scenario = 5;
+}
+
+    }
+}
