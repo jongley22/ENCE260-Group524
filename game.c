@@ -37,8 +37,8 @@ int main (void)
     navswitch_init ();  
     led_init_custom();
     ir_uart_init ();
-    // led_init();
-    
+    led_init();
+    led_set (LED1, 0);
 
     
     // text initialising
@@ -79,8 +79,9 @@ int main (void)
 
         }   
         if (!game_running) {
-            uint8_t scenario;
+            static uint8_t scenario = 0;
             death_screen();
+            led_while(); 
             led_set (LED1, 1);
             if (death_scenario == 1 || scenario == 129) {
                 ir_uart_putc(0b10000001);
@@ -96,6 +97,8 @@ int main (void)
             communication();  
 
             scenario = ir_uart_getc ();
+
+            
 
 
 
