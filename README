@@ -1,0 +1,45 @@
+Slither Game 
+
+Slither is a two-player snake-style game developed for the Atmega32U2 microcontroller using the UCFK4 development board.
+Players control their snakes on a 7×5 LED matrix, attempting to avoid collisions while trying to outlast their opponent. It has multiplayer gameplay using IR-UART for data transmission.
+
+How to Play
+
+Setup
+
+Two UCFK4 boards are required.
+
+Align the boards so their IR transmitters face each other.
+
+Program both boards with the compiled game.out.
+
+Controls
+
+Use the navswitch to move your snake:
+
+North: Up, South: Down, East: Right, West: Left
+
+The snake’s position will update on the RED LED Screen, the snake is able to cross over between screens by simpling navigating over to it.
+
+To grow the snake's respective lengths consuming an apple increases the body length by 1 LED, to spawn in apples press down on the navswitch
+
+How the snakes die
+
+If the users snake's head hits the opponents opponets snake head this will be a TIE, If the user snake's head hits the opponent snake body this will be DEATH for the user and a LOSE this is vice versa for the opponent to win.
+Users colliding with their own bodies will also result in death for the user and a win for the opponent. 
+
+Once a death scenario is detected, the losing board displays a “LOSE” message, and the other displays “WIN”.
+
+Restarting
+
+Press the reset button on both boards to restart the game.
+
+Exampler of a slither game
+
+Both snakes will start with a body length of 1, each snake will spawn in apples to which they will navigate to and consume. With greater length more tactical moves can be made to eliminate the opponent snake. 
+As the game progresses the snakes can move between the screens, eventually a collision will happen and based on the scenario either the user or opponent will win, unless both the snake heads collided together in which case a TIE.
+
+AI Statement of Use
+
+ChatGPT (OpenAI’s GPT-5 model) was used to assist in refining portions of the C code, Makefile syntaxes, All code was reviewed, tested, and integrated manually to ensure correct functionality.
+The AI was used as a development aid — not as an autonomous code generator — and all final design and debugging decisions were performed by the authors Maxwell Beran and Josh Ongley.
