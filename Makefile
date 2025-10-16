@@ -1,9 +1,9 @@
-# File:   Makefile
-# Author: Put your name(s) and usercodes here
-# Date:   Put the date here
-# Descr:  Makefile for game
+#------------------------------------------------------------
+ # File:        MakeFile
+ # Authors:     Maxwell Beran & Josh Ongley
+ # Description: MakeFile
+ #------------------------------------------------------------
 
-# Definitions.
 CC = avr-gcc
 CFLAGS = -mmcu=atmega32u2 -Os -Wall -Wstrict-prototypes -Wextra -g -I. -I../../utils -I../../fonts -I../../drivers -I../../drivers/avr
 OBJCOPY = avr-objcopy
@@ -19,7 +19,7 @@ all: game.out
 game.o: game.c ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h led_selector.h ../../utils/tinygl.h ../../utils/font.h ../../drivers/display.h ../../drivers/ledmat.h ../../fonts/font5x7_1.h movement_his.h apples.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-system.o: ../../drivers/avr/system.c ../../drivers/avr/system.h
+system.o: ../../drivers/avr/system.c ../../drivers/n the LED matrix for the Slither game.avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 pacer.o: ../../utils/pacer.c ../../drivers/avr/system.h ../../drivers/avr/timer.h ../../utils/pacer.h
@@ -37,7 +37,7 @@ tinygl.o: ../../utils/tinygl.c ../../utils/tinygl.h ../../drivers/avr/system.h .
 display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/ledmat.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-font.o: ../../utils/font.c ../../drivers/avr/system.h ../../utils/font.h
+font.o: ../../utils/font.c ../../drivers/avr/systemn the LED matrix for the Slither game..h ../../utils/font.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ledmat.o: ../../drivers/ledmat.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/ledmat.h
