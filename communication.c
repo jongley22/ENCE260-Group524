@@ -55,18 +55,39 @@ void movement(void)
     navswitch_update();
 
     if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body_his, i, j + 1))) {
+        if (j==4) {
+        // player head hit opponent body
+            game_running = false;
+            death_scenario = 1;
+        }
         j++;
         j_changed = 1;
     }
     if (navswitch_push_event_p(NAVSWITCH_WEST) && !(overlap_snake_history(&snake_body_his, i, j - 1))) {
+        
         j--;
         j_changed = 1;
-    }
+
+  
+}
+    
     if (navswitch_push_event_p(NAVSWITCH_NORTH) && !(overlap_snake_history(&snake_body_his, i - 1, j))) {
+        if (i==0) {
+        // player head hit opponent body
+            game_running = false;   
+            death_scenario = 1;
+        }
         i--;
         i_changed = 1;
+        
     }
+    
     if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i + 1, j))) {
+        if (i==6) {
+        // player head hit opponent body
+            game_running = false;   
+        }
+        
         i++;
         i_changed = 1;
     }
