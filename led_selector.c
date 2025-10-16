@@ -129,7 +129,22 @@ static uint8_t L_bm[] =
     0b00010000,
     0b0001111 
 };
-
+static uint8_t W_bm[] = 
+{
+    0b10000001,
+    0b10000001,
+    0b10000001,
+    0b01011010,
+    0b00100100 
+};
+static uint8_t T_bm[] = 
+{
+    0b01111110,
+    0b00010000,
+    0b00010000,
+    0b00010000,
+    0b00010000 
+};
 
 void display_column (uint8_t row_pattern, uint8_t current_column)
 {
@@ -338,6 +353,18 @@ void L_death_screen(void) {
         display_bitmap[j_search] = L_bm[j_search];
     }
 }
+void W_death_screen(void) {
+
+    for (uint8_t j_search = 0; j_search < 5; j_search++) {
+        display_bitmap[j_search] = W_bm[j_search];
+    }
+}
+void T_death_screen(void) {
+
+    for (uint8_t j_search = 0; j_search < 5; j_search++) {
+        display_bitmap[j_search] = T_bm[j_search];
+    }
+}
 // snake_head_bm[j_search] || 
 void game_finnished(Coords cord_status)
 {
@@ -376,7 +403,7 @@ void game_finnished(Coords cord_status)
               head_to_head_overlap || head_to_body_overlap || opp_head_to_opp_body_overlap;
     }
 
-    if (hit) {movement
+    if (hit) {
         
         game_running = false;
     if (user_head_opp_body_overlap) {
@@ -385,25 +412,26 @@ void game_finnished(Coords cord_status)
     death_scenario = 1;
 }
 
-if (opp_head_user_body_overlap) {
+else if (opp_head_user_body_overlap) {
     // opponent head hit player body
     game_running = false;
     death_scenario = 2;
 }
 
-if (head_to_head_overlap) {
+else if (head_to_head_overlap) {
     // both heads collided
     game_running = false;
     death_scenario = 3;
+
 }
 
-if (head_to_body_overlap) {
+else if (head_to_body_overlap) {
     // player head hit its own body
     game_running = false;
     death_scenario = 4;
 }
 
-if (opp_head_to_opp_body_overlap) {
+else if (opp_head_to_opp_body_overlap) {
     // opponent head hit its own body
     game_running = false;
     death_scenario = 5;
@@ -411,3 +439,7 @@ if (opp_head_to_opp_body_overlap) {
 
     }
 }
+ 
+
+
+

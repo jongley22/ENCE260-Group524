@@ -87,19 +87,6 @@ int main (void)
             led_while(); 
 
 
-            // if (death_scenario == 1 || scenario == 129) {
-            //     ir_uart_putc(0b10000001);
-            // } else if (death_scenario == 2 || scenario == 130) {
-            //     ir_uart_putc(0b10000010);
-            // } else if (death_scenario == 3 || scenario == 132) {
-            //     ir_uart_putc(0b10000100);
-            // } else if (death_scenario == 4 || scenario == 144) {
-            //     ir_uart_putc(0b10010000);
-            // } else if (death_scenario == 5 || scenario == 160) {
-            //     ir_uart_putc(0b10100000);
-            // }
-
-
             uint64_t buffer = 10;
             uint64_t max_tick = PACER_RATE / buffer;
             static uint64_t buf_ticker = 0;
@@ -108,13 +95,54 @@ int main (void)
                 buf_ticker++;
             } else {
                 led_set (LED1, 1);
-                L_death_screen();
-                
-                
-            }
+                if (head_to_head_overlap) {
+                    static bool send_once = true;
+                    L_death_screen();
+                    if (send_once) {
+                        ir_uart_putc(0b10000100);
+                        send_once = false;
+                    }
+                    
+                }
+                if (ir_uart_read_ready_p()) {
+                    int scenario = ir_uart_getc ();
+                    if (scenario == 132) {
+                        // Handle scenario for 0b10000100
+                        //head to head
+
+                        L_death_screen();
+                        }
+                }
+           
+            }           
+        }
+    }
+}
 
 
-            // scenario = ir_uart_getc ();
+
+            //     if (head_to_head_overlap) {
+            //         // both heads collided
+
+            //         led_set (LED1, 1);
+
+            //         ir_uart_putc(0b10000100);
+            //     }
+
+            //     int scenario = ir_uart_getc ();
+
+
+            //     if (scenario == 132) {
+            //         // Handle scenario for 0b10000100
+            //         //head to head
+
+            //         T_death_screen();
+            //     }
+            // // User a
+
+    
+
+
 
             
 
@@ -124,7 +152,3 @@ int main (void)
 
             
       
-        }
-    }
-}
-
