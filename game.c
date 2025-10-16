@@ -14,10 +14,10 @@
 //include led.h
 
 
-PairList snake_body_his; //right now will be 1
+PairList snake_body_his; 
 PairList snake_head_his;
 
-PairList opp_snake_body_his; //right now will be 1
+PairList opp_snake_body_his; 
 PairList opp_snake_head_his;
 
 uint8_t game_running = 1;
@@ -37,27 +37,14 @@ int main (void)
     navswitch_init ();  
     led_init_custom();
     ir_uart_init ();
-    led_init();
-    led_set (LED1, 0);
-
-    
-    // text initialising
-    tinygl_init(PACER_RATE);
-    // tinygl_font_set(&font5x7_1);
-    tinygl_text_speed_set(MESSAGE_RATE);
-    tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
-
-    tinygl_text("WIN");
 
     pacer_init (PACER_RATE);
-    
-    
-    
+
     coord_generator();
-    init_user_move_his(&snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_user_move_his(&snake_body_his); 
     init_user_move_his(&snake_head_his);
 
-    init_opp_move_his(&opp_snake_body_his);  // max 5 pairs (<=70) "snake_body extern declared in 
+    init_opp_move_his(&opp_snake_body_his);  
     init_opp_move_his(&opp_snake_head_his);
 
 
@@ -82,7 +69,6 @@ int main (void)
         }   
         if (!game_running) {
             locked_out = true;
-            // static uint8_t scenario = 0; 
 
             led_while(); 
 
@@ -119,49 +105,6 @@ int main (void)
     }
 }
 
-            //     if (head_to_head_overlap) {
-            //         // both heads collided
-
-            //         led_set (LED1, 1);
-
-            //         ir_uart_putc(0b10000100);
-            //     }
-
-            //     int scenario = ir_uart_getc ();
-
-
-            //     if (scenario == 132) {
-            //         // Handle scenario for 0b10000100
-            //         //head to head
-
-            //         T_death_screen();
-            //     }
-            // // User a
-
-    
-
-
-
-                            //     if (head_to_head_overlap) {
-                //     T_death_screen();
-                // }
-                // else if (head_to_body_overlap) {
-                //     L_death_screen();
-                // }
-                // else if (opp_head_to_opp_body_overlap) {
-                //     W_death_screen();
-                // }
-                // else if (opp_head_user_body_overlap) {
-                //     W_death_screen();
-                // }
-                // else if (user_head_opp_body_overlap) {
-                //     L_death_screen();
-                // }
-
-
-
-
-          
 
             
       

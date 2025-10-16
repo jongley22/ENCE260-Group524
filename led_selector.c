@@ -146,28 +146,33 @@ static uint8_t T_bm[] =
     0b00010000 
 };
 
-void display_column (uint8_t row_pattern, uint8_t current_column)
+void display_column(uint8_t row_pattern, uint8_t current_column)
 {
-    /* TODO */
+    static uint8_t prev_col = 0;
 
-    static uint8_t prev_col =0; //statics after they have been declared will ignore there declaration afterwards so it will only see prev_col = current_column;
-    pio_output_high(cols[prev_col]); //we need to turn previos col off
+    // Turn off the previous column
+    pio_output_high(cols[prev_col]);
 
+    // Set row outputs based on the row_pattern
     for (uint8_t i = 0; i < 7; i++) {
         uint8_t current_row = i;
-    if ((row_pattern >> current_row) & 1) { // if row pattern 0110 0000  then 0110 0000 >> 2 = 0001 1000 shifting by relavent row index to check its right most value is 1 or 0
-        pio_output_low(rows[current_row]);
+
+        if ((row_pattern >> current_row) & 1) {
+            // If bit at position current_row is 1, turn the row ON (low)
+            pio_output_low(rows[current_row]);
+        } else {
+            // Else, turn it OFF (high)
+            pio_output_high(rows[current_row]);
+        }
     }
-    else {
-        pio_output_high(rows[current_row]);
 
-    }
-
-
-}   
+    // Turn on the current column
     pio_output_low(cols[current_column]);
-    prev_col = current_column; 
+
+    // Save current column for next time
+    prev_col = current_column;
 }
+
 
 void led_init_custom(void) 
 {
@@ -401,41 +406,41 @@ void game_finnished(Coords cord_status)
 
         hit = user_head_opp_body_overlap || opp_head_user_body_overlap ||
               head_to_head_overlap || head_to_body_overlap || opp_head_to_opp_body_overlap;
-    }
+        }
 
-    if (hit) {
-        
+        if (hit) {
+            
+            game_running = false;
+        if (user_head_opp_body_overlap) {
+        // player head hit opponent body
         game_running = false;
-    if (user_head_opp_body_overlap) {
-    // player head hit opponent body
-    game_running = false;
-    death_scenario = 1;
-}
+        death_scenario = 1;
+        }
 
-else if (opp_head_user_body_overlap) {
-    // opponent head hit player body
-    game_running = false;
-    death_scenario = 2;
-}
+        else if (opp_head_user_body_overlap) {
+            // opponent head hit player body
+            game_running = false;
+            death_scenario = 2;
+        }
 
-else if (head_to_head_overlap) {
-    // both heads collided
-    game_running = false;
-    death_scenario = 3;
+        else if (head_to_head_overlap) {
+            // both heads collided
+            game_running = false;
+            death_scenario = 3;
 
-}
+        }
 
-else if (head_to_body_overlap) {
-    // player head hit its own body
-    game_running = false;
-    death_scenario = 4;
-}
+        else if (head_to_body_overlap) {
+            // player head hit its own body
+            game_running = false;
+            death_scenario = 4;
+        }
 
-else if (opp_head_to_opp_body_overlap) {
-    // opponent head hit its own body
-    game_running = false;
-    death_scenario = 5;
-}
+        else if (opp_head_to_opp_body_overlap) {
+            // opponent head hit its own body
+            game_running = false;
+            death_scenario = 5;
+        }
 
     }
 }

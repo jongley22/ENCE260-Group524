@@ -45,8 +45,9 @@ void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp)
 
     uint8_t low_nibble = packed & 0x0F;           // take 4 bits
     *y_unp = low_nibble & 0x07;                   // ignore top bit, only 0–7 range
-}
+} 
 
+//packs up the coords for game_finnished 
 Coords getCoords(void) {
     Coords c;
 
@@ -168,10 +169,10 @@ void communication(void)
     }
 
     if (j > 4 && move_made) {
-        user_cords = pack_position(i, j - 3);
+        user_cords = pack_position(i, j - 3); 
         ir_uart_putc(user_cords);
     } else if (j < 4 && move_made) {
-        user_cords = pack_position(i, j + 5);
+        user_cords = pack_position(i, j + 5); 
         ir_uart_putc(user_cords);
     } else {
         snake_body_bm_sel(i, j, 1);
