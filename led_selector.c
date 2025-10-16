@@ -120,6 +120,14 @@ static uint8_t hiden_zone_bm[] =
     0b01111111 
 };
 
+static uint8_t L_bm[] = 
+{
+    0b00010000,
+    0b00010000,
+    0b00010000,
+    0b00010000,
+    0b0001111 
+};
 
 
 void display_column (uint8_t row_pattern, uint8_t current_column)
@@ -323,6 +331,12 @@ void death_screen(void) {
     }
 }
 
+void L_death_screen(void) {
+
+    for (uint8_t j_search = 0; j_search < 5; j_search++) {
+        display_bitmap[j_search] = L_bm[j_search];
+    }
+}
 // snake_head_bm[j_search] || 
 void game_finnished(void)
 {

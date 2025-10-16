@@ -65,4 +65,6 @@ void game_finnished(void);
 
 void death_screen(void);
 
+void L_death_screen(void);
+
 #endif /* LEDMAT_H */

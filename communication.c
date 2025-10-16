@@ -180,3 +180,4 @@ void communication(void)
    
 }
 
+ // tinygl_font_set(&font5x7_1);

@@ -81,24 +81,39 @@ int main (void)
         }   
         if (!game_running) {
             locked_out = true;
-            static uint8_t scenario = 0;
-            death_screen();
+            // static uint8_t scenario = 0; 
+
             led_while(); 
-            led_set (LED1, 1);
-            if (death_scenario == 1 || scenario == 129) {
-                ir_uart_putc(0b10000001);
-            } else if (death_scenario == 2 || scenario == 130) {
-                ir_uart_putc(0b10000010);
-            } else if (death_scenario == 3 || scenario == 132) {
-                ir_uart_putc(0b10000100);
-            } else if (death_scenario == 4 || scenario == 144) {
-                ir_uart_putc(0b10010000);
-            } else if (death_scenario == 5 || scenario == 160) {
-                ir_uart_putc(0b10100000);
+
+
+            // if (death_scenario == 1 || scenario == 129) {
+            //     ir_uart_putc(0b10000001);
+            // } else if (death_scenario == 2 || scenario == 130) {
+            //     ir_uart_putc(0b10000010);
+            // } else if (death_scenario == 3 || scenario == 132) {
+            //     ir_uart_putc(0b10000100);
+            // } else if (death_scenario == 4 || scenario == 144) {
+            //     ir_uart_putc(0b10010000);
+            // } else if (death_scenario == 5 || scenario == 160) {
+            //     ir_uart_putc(0b10100000);
+            // }
+
+
+            uint64_t buffer = 10;
+            uint64_t max_tick = PACER_RATE / buffer;
+            static uint64_t buf_ticker = 0;
+            if (buf_ticker <= max_tick) {
+                death_screen();
+                buf_ticker++;
+            } else {
+                led_set (LED1, 1);
+                L_death_screen();
+                
+                
             }
 
 
-            scenario = ir_uart_getc ();
+            // scenario = ir_uart_getc ();
 
             
 
