@@ -64,7 +64,7 @@ bool opp_apple_eaten(Pair *out_pair);
 
 void game_finnished(Coords cord_status);
 
-void death_screen(void);
+void blank_screen(void);
 
 void L_death_screen(void);
 

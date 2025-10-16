@@ -1,3 +1,9 @@
+/*------------------------------------------------------------
+ * File:        led_selector.c
+ * Authors:     Maxwell Beran & Josh Ongley
+ * Description: Controls LED matrix, and collision checking
+ *------------------------------------------------------------*/
+
 #include "system.h"
 #include "pio.h"
 #include "pacer.h"
@@ -345,7 +351,7 @@ void bitmap_complier(void)
     }
 }
 
-void death_screen(void) {
+void blank_screen(void) {
 
     for (uint8_t j_search = 0; j_search < 5; j_search++) {
         display_bitmap[j_search] = blank_bm[j_search];

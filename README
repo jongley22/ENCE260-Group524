@@ -21,25 +21,21 @@ North: Up, South: Down, East: Right, West: Left
 
 The snake’s position will update on the RED LED Screen, the snake is able to cross over between screens by simpling navigating over to it.
 
-To grow the snake's respective lengths consuming an apple increases the body length by 1 LED, to spawn in apples press down on the navswitch
+To grow the snake's length consuming an apple will increases the body length by 1 LED your length will differ on different screens and equal to how many apples you ate on that screen , to spawn in apples press down on the navswitch you can only spawn apples on your own screen.
+
+you can hide in the LED strip for additional stragery.
 
 How the snakes die
 
-If the users snake's head hits the opponents opponets snake head this will be a TIE, If the user snake's head hits the opponent snake body this will be DEATH for the user and a LOSE this is vice versa for the opponent to win.
-Users colliding with their own bodies will also result in death for the user and a win for the opponent. 
+If the users snake's head hits the opponents opponets snake head the winner is given to whos screen the event occured on, If the user snake's head hits the opponent snake body this will be DEATH for the user and a LOSE this is vice versa for the opponent to win.
+Users colliding with their own bodies will also result in death for the user and a win for the opponent. Additionally if user snake head collides with a wall user will lose and opponent will win.
 
-Once a death scenario is detected, the losing board displays a “LOSE” message, and the other displays “WIN”.
+Once a death scenario is detected, the board displays a “LOSE” or "WIN" message on the board where the death event happened.
 
 Restarting
 
-Press the reset button on both boards to restart the game.
-
-Exampler of a slither game
-
-Both snakes will start with a body length of 1, each snake will spawn in apples to which they will navigate to and consume. With greater length more tactical moves can be made to eliminate the opponent snake. 
-As the game progresses the snakes can move between the screens, eventually a collision will happen and based on the scenario either the user or opponent will win, unless both the snake heads collided together in which case a TIE.
+Press the reset button on both boards to restart the game through the terminal.
 
 AI Statement of Use
 
-ChatGPT (OpenAI’s GPT-5 model) was used to assist in refining portions of the C code, Makefile syntaxes, All code was reviewed, tested, and integrated manually to ensure correct functionality.
-The AI was used as a development aid — not as an autonomous code generator — and all final design and debugging decisions were performed by the authors Maxwell Beran and Josh Ongley.
+ChatGPT (OpenAI’s GPT-5 model) was used for formatting comments, description generating binary values and finding bugs.
