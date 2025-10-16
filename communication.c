@@ -47,6 +47,20 @@ void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp)
     *y_unp = low_nibble & 0x07;                   // ignore top bit, only 0–7 range
 }
 
+// Function that returns a Coords struct
+Coords getCoords(void) {
+    Coords c;
+    // Example values (replace with your logic)
+    c.i = j;
+    c.j = i;
+    c.i_opp = i_opp;   // opposite of i
+    c.j_opp = j_opp;   // opposite of j
+    return c;
+}
+
+
+
+
 /* Reads navswitch input and updates local snake position/history */
 void movement(void)
 {
@@ -55,6 +69,10 @@ void movement(void)
     navswitch_update();
 
     if (navswitch_push_event_p(NAVSWITCH_EAST) && !(overlap_snake_history(&snake_body_his, i, j + 1))) {
+        if (j==4){
+            death_scenario=6;
+            game_running=false;
+        }
         j++;
         j_changed = 1;
     }
@@ -63,10 +81,18 @@ void movement(void)
         j_changed = 1;
     }
     if (navswitch_push_event_p(NAVSWITCH_NORTH) && !(overlap_snake_history(&snake_body_his, i - 1, j))) {
+        if (i==0){
+            death_scenario=6;
+            game_running=false;
+        }
         i--;
         i_changed = 1;
     }
     if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i + 1, j))) {
+        if (i==6){
+            death_scenario=6;
+            game_running=false;
+        }
         i++;
         i_changed = 1;
     }
@@ -157,3 +183,4 @@ void communication(void)
         bitmap_complier();
     }
 }
+
