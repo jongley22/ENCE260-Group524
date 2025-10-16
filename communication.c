@@ -48,16 +48,6 @@ void unpack_position(uint8_t packed, uint8_t *x_unp, uint8_t *y_unp)
 }
 
 // Function that returns a Coords struct
-Coords getCoords(void) {
-    Coords c;
-    // Example values (replace with your logic)
-    c.i = j;
-    c.j = i;
-    c.i_opp = i_opp;   // opposite of i
-    c.j_opp = j_opp;   // opposite of j
-    return c;
-}
-
 
 
 
