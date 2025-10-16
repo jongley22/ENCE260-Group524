@@ -64,7 +64,8 @@ int main (void)
     while (1)
     {
     // apple_flasher();
-        game_finnished();
+        Coords cord_status = getCoords();
+        game_finnished(cord_status);
         static bool locked_out = false;
         
         if (game_running && (!locked_out)) {

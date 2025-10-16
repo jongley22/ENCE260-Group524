@@ -4,6 +4,7 @@
 #include "led_selector.h"
 #include "apples.h"
 #include "movement_his.h"
+#include "communication.h"
 
 #define PACER_RATE 500 
 
@@ -338,8 +339,13 @@ void L_death_screen(void) {
     }
 }
 // snake_head_bm[j_search] || 
-void game_finnished(void)
+void game_finnished(Coords cord_status)
 {
+    int i = cord_status.i;
+    int j = cord_status.j;
+    int i_opp = cord_status.i_opp;
+    int j_opp = cord_status.j_opp;
+
     bool hit = false;
 
     // reset flags for this tick
@@ -362,14 +368,15 @@ void game_finnished(void)
         user_head_opp_body_overlap   = (head     & opp_body_no_head) != 0;
         opp_head_user_body_overlap   = (opp_head & body_no_head)     != 0;
         head_to_head_overlap         = (head     & opp_head)         != 0;
-        head_to_body_overlap         = (head     & body_no_head)     != 0;
-        opp_head_to_opp_body_overlap = (opp_head & opp_body_no_head) != 0;
+
+        head_to_body_overlap         = overlap_snake_history(&snake_body_his, i, j);
+        opp_head_to_opp_body_overlap = overlap_snake_history(&opp_snake_body_his, i_opp, j_opp);
 
         hit = user_head_opp_body_overlap || opp_head_user_body_overlap ||
               head_to_head_overlap || head_to_body_overlap || opp_head_to_opp_body_overlap;
     }
 
-    if (hit) {
+    if (hit) {movement
         
         game_running = false;
     if (user_head_opp_body_overlap) {

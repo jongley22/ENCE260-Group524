@@ -6,6 +6,7 @@
 #include "pacer.h"
 #include "apples.h"
 #include "movement_his.h"
+#include "communication.h"
 extern uint8_t death_scenario;
 
 extern uint8_t game_running;
@@ -61,7 +62,7 @@ bool opp_apple_eaten(Pair *out_pair);
 
 // game state
 
-void game_finnished(void);
+void game_finnished(Coords cord_status);
 
 void death_screen(void);
 

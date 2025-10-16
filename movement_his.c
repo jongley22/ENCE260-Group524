@@ -63,12 +63,16 @@ Pair addPair(PairList *list, int i, int j, int max_pairs)
 /* Return true if (i,j) exists anywhere in the history */
 bool overlap_snake_history(PairList *list, int i, int j)
 {
-    for (int x = 0; x < list->num_pairs; x++) {   // only works for one matrix
+    int count = 0;
+    for (int x = 0; x < list->num_pairs; x++) {
         if ((list->tuple[x].i == i) && (list->tuple[x].j == j)) {
-            return true;
+            count++;
+            if (count > 1) {
+                return true;  // Found a duplicate
+            }
         }
     }
-    return false;
+    return false; // No duplicates
 }
 
 

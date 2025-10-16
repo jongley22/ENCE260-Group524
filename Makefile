@@ -28,7 +28,7 @@ pacer.o: ../../utils/pacer.c ../../drivers/avr/system.h ../../drivers/avr/timer.
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-led_selector.o: led_selector.c led_selector.h movement_his.h ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h ../../drivers/navswitch.h apples.h
+led_selector.o: led_selector.c led_selector.h movement_his.h ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/avr/pio.h ../../drivers/navswitch.h apples.h communication.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 tinygl.o: ../../utils/tinygl.c ../../utils/tinygl.h ../../drivers/avr/system.h ../../drivers/display.h  ../../utils/font.h
