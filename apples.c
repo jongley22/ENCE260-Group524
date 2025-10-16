@@ -1,3 +1,10 @@
+/*------------------------------------------------------------
+ * File:        apples.c
+ * Authors:     Maxwell Beran & Josh Ongley
+ * Description: Handles random apple generation and display 
+ *              on the LED matrix for the Slither game.
+ *------------------------------------------------------------*/
+
 #include "navswitch.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,45 +12,23 @@
 #include "apples.h"
 #include "led_selector.h"
 
-
 static uint8_t apple_counter = 1;
 
-void coord_generator(void) {
-    navswitch_update ();
+/* Generates a random coordinate for the apple and displays it */
+void coord_generator(void)
+{
+    navswitch_update();
 
-    
-    
-    
-    int app_i = rand() % 7;  
-    int app_j = rand() % 4;  
-    //int app_i = 1;  
-    //int app_j = 1;  
-    
-    display_apple(app_i,app_j);
-    
-    
+    int app_i = rand() % 7;
+    int app_j = rand() % 4;
+
+    display_apple(app_i, app_j);
 }
-void display_apple(uint8_t i_display,uint8_t j_display) {
-    // pacer_init (100);
-    // led_selector(i_display,j_display,1);
-    // pacer_wait();
-    // led_selector(i_display,j_display,0);
-    // pacer_wait();
-    apples_bm_sel(i_display,j_display,1);
-    apples_bm_sel(0,0,0); //fixes 0,0 led being on init
+
+/* Displays an apple at the given coordinates */
+void display_apple(uint8_t i_display, uint8_t j_display)
+{
+    apples_bm_sel(i_display, j_display, 1);
+    apples_bm_sel(0, 0, 0);   // Fixes (0,0) LED being on at init
     apple_counter++;
-
 }
-
-// void apple_flasher(void){
-
-//      for (uint8_t j_search = 0; j_search < 5; j_search++) {
-//         apples_display_bm[j_search] = apples_on_bm[j_search];
-//     }
-//     // pacer_wait();
-//     //  for (uint8_t j_search = 0; j_search < 5; j_search++) {
-//     //     apples_display_bm[j_search] = blank_bm[j_search];
-//     // }
-//     // pacer_wait();
-   
-// }
