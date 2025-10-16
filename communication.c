@@ -84,7 +84,7 @@ void movement(void)
         i--;
         i_changed = 1;
     }
-    if (navswitch_push_event_p(NAVSWITCH_SOUTH)) {
+    if (navswitch_push_event_p(NAVSWITCH_SOUTH) && !(overlap_snake_history(&snake_body_his, i + 1, j))) {
         if (i==6){
             death_scenario=6;
             game_running=false;

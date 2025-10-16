@@ -94,32 +94,30 @@ int main (void)
                 death_screen();
                 buf_ticker++;
             } else {
-                led_set (LED1, 1);
-                if (head_to_head_overlap) {
-                    static bool send_once = true;
-                    L_death_screen();
-                    if (send_once) {
-                        ir_uart_putc(0b10000100);
-                        send_once = false;
-                    }
-                    
+                static bool send_once = true;
+                if (send_once) {
+                    ir_uart_putc(0b10000100);
+                    send_once = false;
                 }
-                if (ir_uart_read_ready_p()) {
-                    int scenario = ir_uart_getc ();
-                    if (scenario == 132) {
-                        // Handle scenario for 0b10000100
-                        //head to head
 
-                        L_death_screen();
-                        }
+                if (opp_head_to_opp_body_overlap) {
+                    W_death_screen();
+                } else if (head_to_head_overlap) {
+                    W_death_screen();
+                } else if (head_to_body_overlap) {
+                    L_death_screen();
+                } else if (user_head_opp_body_overlap) {
+                    L_death_screen();
+                } else if (opp_head_user_body_overlap) {
+                    W_death_screen();
+                } else if (death_scenario == 6) {
+                    L_death_screen();
                 }
-           
-            }           
-        }
+
+            }
+        }        
     }
 }
-
-
 
             //     if (head_to_head_overlap) {
             //         // both heads collided
@@ -144,7 +142,22 @@ int main (void)
 
 
 
-            
+                            //     if (head_to_head_overlap) {
+                //     T_death_screen();
+                // }
+                // else if (head_to_body_overlap) {
+                //     L_death_screen();
+                // }
+                // else if (opp_head_to_opp_body_overlap) {
+                //     W_death_screen();
+                // }
+                // else if (opp_head_user_body_overlap) {
+                //     W_death_screen();
+                // }
+                // else if (user_head_opp_body_overlap) {
+                //     L_death_screen();
+                // }
+
 
 
 

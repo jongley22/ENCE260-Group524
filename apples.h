@@ -17,6 +17,8 @@
 /* Generates a random apple coordinate and displays it */
 void coord_generator(void);
 
+void apple_flasher(void);
+
 /* Displays an apple at the specified LED matrix coordinates */
 void display_apple(uint8_t i_display, uint8_t j_display);
 
