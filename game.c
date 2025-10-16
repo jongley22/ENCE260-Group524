@@ -111,7 +111,7 @@ int main(void)
                 led_set(LED1, 1);
                 L_death_screen();
             }
-
+            // Testing
             // scenario = ir_uart_getc ();
         }
     }
